@@ -1,6 +1,6 @@
 CPP = c++
 
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRC = Contact.cpp main.cpp PhoneBook.cpp
 
@@ -11,10 +11,10 @@ NAME = PhoneBook
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CPP) $(CFLAGS) $(OBJ) -o $(NAME)
+	$(CPP) $(CPPFLAGS) $(OBJ) -o $(NAME)
 
 %.o: %.cpp
-	$(CPP) $(CFLAGS) -c $< -o $@
+	$(CPP) $(CPPFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
