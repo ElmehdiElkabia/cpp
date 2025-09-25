@@ -18,7 +18,7 @@ std::string format(const std::string &str)
 		return std::string(10 - str.length(), ' ') + str;
 }
 
-void PhoneBook::displayContacts() const
+void PhoneBook::displayAll() const
 {
 	std::cout << std::setw(10) << "Index" << "|"
 			  << std::setw(10) << "First Name" << "|"
@@ -33,7 +33,7 @@ void PhoneBook::displayContacts() const
 	}
 }
 
-void PhoneBook::displayContact(int i) const
+void PhoneBook::displayOne(int i) const
 {
 	if (i < 0 || i >= count || i >= 8)
 	{

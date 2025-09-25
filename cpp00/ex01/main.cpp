@@ -45,7 +45,7 @@ std::string getPhone(const std::string &prompt)
 		}
 		if (valid)
 			break;
-		std::cout << "Invalid phone number.\n";
+		std::cout << "Invalid phone number. Please try again.\n";
 	}
 	return input;
 }
@@ -71,7 +71,7 @@ void searchContact(PhoneBook &phonebook)
 		std::cout << "No contacts to display.\n";
 		return;
 	}
-	phonebook.displayContacts();
+	phonebook.displayAll();
 
 	std::string input;
 	std::cout << "Enter index to view details: ";
@@ -98,7 +98,7 @@ void searchContact(PhoneBook &phonebook)
 	for (size_t i = 0; i < input.length(); ++i)
 		index = index * 10 + (input[i] - '0');
 
-	phonebook.displayContact(index);
+	phonebook.displayOne(index);
 }
 
 int main()

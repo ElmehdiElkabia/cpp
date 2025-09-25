@@ -15,8 +15,8 @@ private:
 public:
 	PhoneBook();
 	void addContact(const Contact &c);
-	void displayContacts() const;
-	void displayContact(int i) const;
+	void displayAll() const;
+	void displayOne(int i) const;
 	int getCount() const;
 };
 
