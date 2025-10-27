@@ -12,9 +12,9 @@ private:
 	void error(void);
 
 public:
+	void complain(std::string level);
 	Harl();
 	~Harl();
-	void complain(std::string level);
 };
 
 #endif

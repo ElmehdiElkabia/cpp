@@ -12,5 +12,4 @@ int main(void)
 
 	// h.complain("ERROR");
 
-	// h.complain("asdasd");
 }

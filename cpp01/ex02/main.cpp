@@ -1,19 +1,23 @@
 #include <iostream>
 
-int	main(void)
+int main(void)
 {
-	std::string A = "HI THIS IS BRAIN";
+	std::string brain;
 
-	std::string *stringPTR = &A;
-	std::string &stringREF = A;
+	brain = "HI THIS IS BRAIN";
 
-	std::cout << "memory address of the string variable => " << &A << std::endl;
-	std::cout << "The memory address held by stringPTR => " << stringPTR << std::endl;
-	std::cout << "The memory address held by stringREF => " << &stringREF << std::endl;
+	std::string *stringPTR;
+
+	stringPTR = &brain;
+	std::string &stringREF = brain;
+
+	std::cout << "Memory address of brain:     " << &brain << std::endl;
+	std::cout << "Memory address held by PTR:  " << stringPTR << std::endl;
+	std::cout << "Memory address held by REF:  " << &stringREF << std::endl;
+
 	std::cout << std::endl;
-	std::cout << "The value of the string variable => " << A << std::endl;
-	std::cout << "The value pointed to by stringPTR => " << *stringPTR << std::endl;
-	std::cout << "The value pointed to by stringREF => " << stringREF << std::endl;
 
+	std::cout << "Value of brain:              " << brain << std::endl;
+	std::cout << "Value pointed by PTR:        " << *stringPTR << std::endl;
+	std::cout << "Value referenced by REF:     " << stringREF << std::endl;
 }
-
