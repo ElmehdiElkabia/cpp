@@ -1,40 +1,35 @@
 #include "ClapTrap.hpp"
-#include "FragTrap.hpp"
 #include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
-int main(void)
+int main()
 {
-    // ClapTrap a("1");
-    // ClapTrap b("2");
-    // ScavTrap c("3");
-    // FragTrap d("4");
+    std::cout << "\n--- ClapTrap Tests ---\n";
+    ClapTrap clap("CLAPPY");
+    clap.attack("target dummy");
+    clap.takeDamage(5);
+    clap.beRepaired(3);
+    clap.takeDamage(10);
 
-    // a.attack("2");
-    // b.takeDamage(a.getAttackDmg());
-    // a.attack("2");
-    // b.takeDamage(a.getAttackDmg());
-    // a.attack("2");
-    // b.takeDamage(a.getAttackDmg());
-    // c.guardGate();
-    // d.highFivesGuys();
+    std::cout << "\n--- ScavTrap Tests ---\n";
+    ScavTrap scav("SCAVY");
+    scav.attack("enemy robot");
+    scav.guardGate();
+    scav.takeDamage(50);
+    scav.beRepaired(20);
 
-    ClapTrap *scav;
-    scav = new ScavTrap("1");
+    std::cout << "\n--- ScavTrap Tests ---\n";
 
-    // FragTrap *frag;
-    // frag = new FragTrap("2");
-    // FragTrap copy(*frag);
+    ClapTrap *c = &scav;
+    c->attack("10");
 
-    // copy.attack("ilias");
-    // copy.highFivesGuys();
-    // // scav->attack("2");
-    // frag->takeDamage(100);
-    // frag->highFivesGuys();
+    std::cout << "\n--- FragTrap Tests ---\n";
+    FragTrap frag("FRAGGY");
+    frag.attack("evil drone");
+    frag.highFivesGuys();
+    frag.takeDamage(80);
+    frag.beRepaired(40);
 
-    scav->attack("1");
-
-    // delete scav;
-    delete scav;
-
-    return (0);
+    std::cout << "\n--- Test Done ---\n";
+    return 0;
 }
