@@ -27,4 +27,18 @@ int main()
 	delete i;
 	std::cout << "\n";
 	delete j;
+
+	std::cout << "\n=== Copy tests ===" << std::endl;
+
+	Dog a;
+	std::cout << "\n";
+	Dog b(a); // copy constructor
+	std::cout << "\n";
+	Dog c;
+	std::cout << "\n";
+	c = b; // assignment operator
+
+	// a.makeSound();
+	// b.makeSound();
+	// c.makeSound();
 }
