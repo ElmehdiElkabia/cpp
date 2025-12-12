@@ -1,6 +1,6 @@
 #include "Ice.hpp"
 
-Ice::Ice()
+Ice::Ice(): AMateria()
 {
 	this->type = "ice";
 	std::cout << "Default constructor is Call from class Ice\n";
@@ -25,8 +25,13 @@ Ice::~Ice()
 	std::cout << "Destructor is Call from class Ice\n";
 }
 
+AMateria *Ice::clone() const
+{
+	return (new Ice());
+}
+
 void Ice::use(ICharacter &target)
 {
-	(void)target;
-	std::cout << "* Shoots an ice bolt at " << this->type << std::endl;
+	std::cout << "* Shoots an ice bolt at " << target.getName() << " *" << std::endl;
 }
+

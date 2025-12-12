@@ -1,6 +1,6 @@
 #include "AMateria.hpp"
 
-AMateria::AMateria() : type("_Type")
+AMateria::AMateria() : type("Default_Type")
 {
 	std::cout << "Default constructor is Call from class AMateria\n";
 }
@@ -29,7 +29,7 @@ AMateria::~AMateria()
 	std::cout << "Destructor is Call from class AMateria\n";
 }
 
-std::string const &AMateria::getType() const
+const std::string &AMateria::getType() const
 {
 	return type;
 }

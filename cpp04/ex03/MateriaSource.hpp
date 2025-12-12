@@ -5,6 +5,9 @@
 
 class MateriaSource : public IMateriaSource
 {
+private:
+	AMateria *slot[4];
+
 public:
 	MateriaSource();
 	MateriaSource(const MateriaSource &copy);
