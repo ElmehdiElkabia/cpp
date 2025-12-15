@@ -10,7 +10,7 @@ private:
 	AMateria *inventory[4];
 	std::string _name;
 
-private:
+public:
 	Character();
 	Character(std::string const &name);
 	Character(const Character &copy);
