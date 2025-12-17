@@ -228,7 +228,7 @@ int main()
 		
 		delete ice;
 		delete cure;
-		delete fifth; // Must delete 5th one manually
+		delete fifth;
 		delete src;
 	}
 
@@ -333,9 +333,7 @@ int main()
 	}
 
 	printSection("ALL TESTS COMPLETED!");
-	std::cout << "\nRun with valgrind to check for memory leaks:" << std::endl;
-	std::cout << "valgrind --leak-check=full --show-leak-kinds=all ./Interface" << std::endl;
-	std::cout << "\nExpected result: 0 bytes leaked, no errors" << std::endl;
+
 
 	return 0;
 }

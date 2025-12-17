@@ -5,7 +5,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 SRC = Animal.cpp  Cat.cpp  Dog.cpp  main.cpp Brain.cpp
 
 
-NAME = Animal
+NAME = Copy
 
 OBJ = $(SRC:.cpp=.o)
 
