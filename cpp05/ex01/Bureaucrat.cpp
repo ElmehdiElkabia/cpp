@@ -48,11 +48,23 @@ void Bureaucrat::decrement()
 
 Bureaucrat::~Bureaucrat()
 {
-	std::cout << "Destructor is Call" << std::endl;
+	std::cout << "Destructor from Class Bureaucrat is Call" << std::endl;
 }
 
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &obj)
 {
 	os << obj.getName() << ", bureaucrat grade " << obj.getGrade() << std::endl;
 	return os;
+}
+
+void Bureaucrat::signForm(const Form &form)
+{
+	try
+	{
+		Form::beSigned();
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << e.what() << '\n';
+	}
 }
