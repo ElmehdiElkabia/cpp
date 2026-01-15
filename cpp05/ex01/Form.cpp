@@ -1,9 +1,9 @@
 #include "Form.hpp"
 
 Form::Form(const std::string name, int signgrade, int execgrade) : name(name),
+																   issigned(false),
 																   signgrade(signgrade),
-																   execgrade(execgrade),
-																   issigned(false)
+																   execgrade(execgrade)
 {
 	if (signgrade < 1)
 		throw GradeTooHighException();
