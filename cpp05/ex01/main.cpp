@@ -1,79 +1,64 @@
-#include "Bureaucrat.hpp"
 #include <iostream>
+#include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 int main()
 {
 	std::cout << "\033[32m--- TEST 1: ---\033[0m" << std::endl;
 	try
 	{
-		Bureaucrat elmehdi("elmehdi", 5);
-		std::cout << elmehdi << std::endl;
+		Form tax("Tax Form", 50, 100);
+		Bureaucrat bureaucrat("Elmehdi", 1);
 
-		elmehdi.increment();
-		std::cout << elmehdi << std::endl;
-
-		elmehdi.decrement();
-		std::cout << elmehdi << std::endl;
+		std::cout << "Created: " << tax << std::endl;
+		std::cout << "Created: " << bureaucrat << std::endl;
 	}
 	catch (std::exception &e)
 	{
-		std::cout << "\033[1;31mException : " << e.what() << "\033[0m" << std::endl;
+		std::cout << "Error: " << e.what() << std::endl;
 	}
-	std::cout << std::endl;
 
-	std::cout << "\033[32m--- TEST 2: ---\033[0m" << std::endl;
 	try
 	{
-		Bureaucrat elkabia("Elkabia", 2);
-		std::cout << elkabia << std::endl;
+		Form impossible("Impossible", 0, 100);
 
-		elkabia.increment();
-		std::cout << elkabia << std::endl;
-
-		elkabia.increment();
+		std::cout << "Created: " << impossible << std::endl;
 	}
 	catch (std::exception &e)
 	{
-		std::cout << "\033[1;31mException : " << e.what() << "\033[0m" << std::endl;
+		std::cout << "\033[31mException : " << e.what() << "\033[0m" << std::endl;
 	}
-	std::cout << std::endl;
 
-	std::cout << "\033[32m--- TEST 3: ---\033[0m" << std::endl;
+	std::cout << std::endl
+			  << "\033[32m--- TEST 2: ---\033[0m" << std::endl;
 	try
 	{
-		Bureaucrat ali("Ali", 149);
-		std::cout << ali << std::endl;
+		Bureaucrat boss("Boss", 5);
+		Form contract("Employment Contract", 20, 50);
 
-		ali.decrement();
-		std::cout << ali << std::endl;
+		std::cout << "Created: " << boss << std::endl;
+		std::cout << "Created: " << contract << std::endl;
 
-		ali.decrement();
+		boss.signForm(contract);
 	}
 	catch (std::exception &e)
 	{
-		std::cout << "\033[1;31mException : " << e.what() << "\033[0m" << std::endl;
+		std::cout << "Unexpected : " << e.what() << std::endl;
 	}
-	std::cout << std::endl;
 
-	std::cout << "\033[32m--- TEST 4: ---\033[0m" << std::endl;
+	std::cout << std::endl
+			  << "\033[32m--- TEST 3: ---\033[0m" << std::endl;
 	try
 	{
-		Bureaucrat jad("Jad", 0);
-	}
-	catch (std::exception &e)
-	{
-		std::cout << "\033[1;31mException : " << e.what() << "\033[0m" << std::endl;
-	}
-	std::cout << std::endl;
+		Bureaucrat intern("Intern", 100);
 
-	std::cout << "\033[32m--- TEST 5: ---\033[0m" << std::endl;
-	try
-	{
-		Bureaucrat amine("Amine", 200);
+		Form topSecret("Top Secret Doc", 50, 150);
+
+		intern.signForm(topSecret);
 	}
 	catch (std::exception &e)
 	{
-		std::cout << "\033[1;31mException : " << e.what() << "\033[0m" << std::endl;
+		std::cout << "Unexpected : " << e.what() << std::endl;
 	}
 
 	return 0;

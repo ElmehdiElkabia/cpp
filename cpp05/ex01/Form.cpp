@@ -71,7 +71,7 @@ int Form::getExecGrade() const
 
 std::ostream &operator<<(std::ostream &os, const Form &obj)
 {
-	os << obj.getName() << " / " << obj.getIsSigned() << " / " << obj.getSignGrade() << " / " << obj.getExecGrade() << std::endl;
+	os << "Form '" << obj.getName() << "':" << " Status: " << obj.getIsSigned() << " Required Grade to Sign: " << obj.getSignGrade() << " Required Grade to Execute: " << obj.getExecGrade() << std::endl;
 	return os;
 }
 

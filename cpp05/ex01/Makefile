@@ -6,7 +6,7 @@ SRC = main.cpp Bureaucrat.cpp Form.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
-NAME = Bureaucrat
+NAME = Form
 
 all: $(NAME)
 
