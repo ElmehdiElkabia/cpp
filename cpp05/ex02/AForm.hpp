@@ -46,6 +46,6 @@ public:
 	void checkExecutability(Bureaucrat const &executor) const;
 };
 
-std::ostream &operator<<(std::ostream &os, const Form &obj);
+std::ostream &operator<<(std::ostream &os, const AForm &obj);
 
 #endif

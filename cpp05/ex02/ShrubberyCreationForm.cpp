@@ -32,8 +32,9 @@ std::string ShrubberyCreationForm::getTarget() const
 void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 {
 	AForm::checkExecutability(executor);
-
+	
 	std::cout << "planting trees at " << this->getTarget() << "..." << std::endl;
+
 
 	std::string fileName = this->getTarget() + "_shrubbery";
 	std::ofstream outputfile(fileName.c_str());
