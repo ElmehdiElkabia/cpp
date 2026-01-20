@@ -13,21 +13,19 @@ int main()
 
     std::cout << "\n\033[36m--- TEST 1: SHRUBBERY CREATION FORM ---\033[0m" << std::endl;
     try {
-        Bureaucrat bob("Bob", 136); // Grade just high enough to execute
+        Bureaucrat bob("Bob", 137); // Grade just high enough to execute
         ShrubberyCreationForm shrub("home");
 
         std::cout << shrub << std::endl;
         
         // Try to execute before signing (Should fail)
-        // bob.executeForm(shrub); 
+        bob.executeForm(shrub); 
 
         // Sign it
         bob.signForm(shrub);
 
-
-
         // Execute it (Should work and create 'home_shrubbery')
-        // bob.executeForm(shrub);
+        bob.executeForm(shrub);
     }
     catch (std::exception &e) {
         std::cout << "Exception: " << e.what() << std::endl;
@@ -41,10 +39,10 @@ int main()
         doctor.signForm(robot);
         
         // Run it 4 times to see the 50% chance in action
-        // std::cout << "Attempt 1: "; doctor.executeForm(robot);
-        // std::cout << "Attempt 2: "; doctor.executeForm(robot);
-        // std::cout << "Attempt 3: "; doctor.executeForm(robot);
-        // std::cout << "Attempt 4: "; doctor.executeForm(robot);
+        std::cout << "Attempt 1: "; doctor.executeForm(robot);
+        std::cout << "Attempt 2: "; doctor.executeForm(robot);
+        std::cout << "Attempt 3: "; doctor.executeForm(robot);
+        std::cout << "Attempt 4: "; doctor.executeForm(robot);
     }
     catch (std::exception &e) {
         std::cout << "Exception: " << e.what() << std::endl;
@@ -64,11 +62,11 @@ int main()
 
         // Peasant tries to execute (Fail: Grade too low)
         std::cout << "--- Peasant trying to execute ---" << std::endl;
-        // peasant.executeForm(pardon);
+        peasant.executeForm(pardon);
 
         // King executes (Success)
         std::cout << "--- King trying to execute ---" << std::endl;
-        // king.executeForm(pardon);
+        king.executeForm(pardon);
     }
     catch (std::exception &e) {
         std::cout << "Exception: " << e.what() << std::endl;
