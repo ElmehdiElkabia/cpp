@@ -6,7 +6,7 @@ SRC = AForm.cpp  Bureaucrat.cpp  main.cpp  PresidentialPardonForm.cpp  RobotomyR
 
 OBJ = $(SRC:.cpp=.o)
 
-NAME = ex02
+NAME = AForm
 
 all: $(NAME)
 

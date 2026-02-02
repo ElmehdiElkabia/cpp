@@ -1,6 +1,6 @@
 #include <iostream>
-#include <cstdlib> // For srand
-#include <ctime>   // For time
+#include <cstdlib>
+#include <ctime>
 #include "Bureaucrat.hpp"
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
@@ -8,69 +8,72 @@
 
 int main()
 {
-    // 1. Seed the random number generator for Robotomy
-    std::srand(std::time(NULL));
+	std::srand(std::time(NULL));
 
-    std::cout << "\n\033[36m--- TEST 1: SHRUBBERY CREATION FORM ---\033[0m" << std::endl;
-    try {
-        Bureaucrat bob("Bob", 137); // Grade just high enough to execute
-        ShrubberyCreationForm shrub("home");
+	std::cout << "\n\033[32m--- TEST 1: ---\033[0m" << std::endl;
+	try
+	{
+		Bureaucrat bob("Bob", 137);
+		ShrubberyCreationForm shrub("home");
 
-        std::cout << shrub << std::endl;
-        
-        // Try to execute before signing (Should fail)
-        bob.executeForm(shrub); 
+		std::cout << shrub << std::endl;
 
-        // Sign it
-        bob.signForm(shrub);
+		bob.executeForm(shrub);
 
-        // Execute it (Should work and create 'home_shrubbery')
-        bob.executeForm(shrub);
-    }
-    catch (std::exception &e) {
-        std::cout << "Exception: " << e.what() << std::endl;
-    }
+		bob.signForm(shrub);
 
-    std::cout << "\n\033[36m--- TEST 2: ROBOTOMY REQUEST FORM ---\033[0m" << std::endl;
-    try {
-        Bureaucrat doctor("Dr. House", 45); // Grade 45 is needed to execute
-        RobotomyRequestForm robot("Bender");
+		bob.executeForm(shrub);
+	}
+	catch (std::exception &e)
+	{
+		std::cout << "\033[1;31mException : " << e.what() << "\033[0m" << std::endl;
+	}
 
-        doctor.signForm(robot);
-        
-        // Run it 4 times to see the 50% chance in action
-        std::cout << "Attempt 1: "; doctor.executeForm(robot);
-        std::cout << "Attempt 2: "; doctor.executeForm(robot);
-        std::cout << "Attempt 3: "; doctor.executeForm(robot);
-        std::cout << "Attempt 4: "; doctor.executeForm(robot);
-    }
-    catch (std::exception &e) {
-        std::cout << "Exception: " << e.what() << std::endl;
-    }
+	std::cout << "\n\033[32m--- TEST 2: ---\033[0m" << std::endl;
+	try
+	{
+		Bureaucrat doctor("Dr. House", 45); 
+		RobotomyRequestForm robot("Bender");
 
-    std::cout << "\n\033[36m--- TEST 3: PRESIDENTIAL PARDON FORM ---\033[0m" << std::endl;
-    try {
-        Bureaucrat king("King Arthur", 5);   // Can execute (Grade 5)
-        Bureaucrat peasant("Peasant", 100); // Cannot execute
-        PresidentialPardonForm pardon("Arthur Dent");
+		doctor.signForm(robot);
 
-        // Peasant tries to sign (Fail)
-        peasant.signForm(pardon);
+		std::cout << "Attempt 1: ";
+		doctor.executeForm(robot);
+		std::cout << "Attempt 2: ";
+		doctor.executeForm(robot);
+		std::cout << "Attempt 3: ";
+		doctor.executeForm(robot);
+		std::cout << "Attempt 4: ";
+		doctor.executeForm(robot);
+	}
+	catch (std::exception &e)
+	{
+		std::cout << "\033[1;31mException : " << e.what() << "\033[0m" << std::endl;
+	}
 
-        // King signs (Success)
-        king.signForm(pardon);
+	std::cout << "\n\033[32m--- TEST 3: ---\033[0m" << std::endl;
+	try
+	{
+		Bureaucrat king("King Arthur", 5);
+		Bureaucrat peasant("Peasant", 100);
+		PresidentialPardonForm pardon("Arthur Dent");
 
-        // Peasant tries to execute (Fail: Grade too low)
-        std::cout << "--- Peasant trying to execute ---" << std::endl;
-        peasant.executeForm(pardon);
+		
+		peasant.signForm(pardon);
 
-        // King executes (Success)
-        std::cout << "--- King trying to execute ---" << std::endl;
-        king.executeForm(pardon);
-    }
-    catch (std::exception &e) {
-        std::cout << "Exception: " << e.what() << std::endl;
-    }
+		
+		king.signForm(pardon);
 
-    return 0;
+		std::cout << "--- Peasant trying to execute ---" << std::endl;
+		peasant.executeForm(pardon);
+
+		std::cout << "--- King trying to execute ---" << std::endl;
+		king.executeForm(pardon);
+	}
+	catch (std::exception &e)
+	{
+		std::cout << "\033[1;31mException : " << e.what() << "\033[0m" << std::endl;
+	}
+
+	return 0;
 }

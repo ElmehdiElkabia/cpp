@@ -79,6 +79,6 @@ void Bureaucrat::executeForm(AForm const &form) const
 	}
 	catch (std::exception &e)
 	{
-		std::cerr << this->getName() << "couldn't executed" << form.getName() << " because " << e.what() << std::endl;
+		std::cerr << this->getName() << " couldn't executed " << form.getName() << " because " << e.what() << std::endl;
 	}
 }
