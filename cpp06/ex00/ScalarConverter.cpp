@@ -1,8 +1,10 @@
 #include "ScalarConverter.hpp"
 
-
-void ScalarConverter::convert(std::string exp)
+ScalarConverter::ScalarConverter(){}
+ScalarConverter::ScalarConverter(const ScalarConverter &copy){(void)copy}
+ScalarConverter &ScalarConverter::operator(const ScalarConverter &copy)
 {
-	// c = static_cast<char>(exp);
-	// i = static_cast<int>(exp);
+	(void)copy;
+	return *this;
 }
+ScalarConverter::~ScalarConverter(){}
