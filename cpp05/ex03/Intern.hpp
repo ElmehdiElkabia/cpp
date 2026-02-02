@@ -21,6 +21,11 @@ public:
 	Intern &operator=(const Intern &copy);
 	~Intern();
 
+	class NameNotExist : public std::exception
+	{
+		virtual const char *what() const throw();
+	};
+
 	AForm *makeForm(std::string formName, std::string target);
 };
 

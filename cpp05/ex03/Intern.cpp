@@ -18,6 +18,12 @@ Intern::~Intern()
 	std::cout << "Destructor from Class Intern is Call" << std::endl;
 }
 
+
+const char *Intern::NameNotExist::what() const throw()
+{
+	return "Intern cannot create form: form name does not exist.";
+}
+
 AForm *Intern::makeForm(std::string formName, std::string target)
 {
 	std::string forms[3] = {"shrubbery creation", "robotomy request", "presidential pardon"};
@@ -34,8 +40,7 @@ AForm *Intern::makeForm(std::string formName, std::string target)
 			return ((this->*fc[i])(target));
 		}
 	}
-	std::cout << "Intern cannot create " << formName << " because it doesn't exist." << std::endl;
-	return NULL;
+	throw NameNotExist();
 }
 
 AForm *Intern::makeShrubbery(std::string target)
