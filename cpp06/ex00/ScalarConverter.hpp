@@ -5,9 +5,9 @@
 
 class ScalarConverter
 {
-	public:
+public:
 	ScalarConverter();
-	ScalarConverter(const ScalarConverter  &copy);
+	ScalarConverter(const ScalarConverter &copy);
 	ScalarConverter &operator=(const ScalarConverter &copy);
 	~ScalarConverter();
 
@@ -23,14 +23,12 @@ class ScalarConverter
 	void convertfromfloat(float v);
 	void convertfromdouble(double v);
 
-
 	void printchar(double v);
 	void printint(double v);
 	void printfloat(double v);
 	void printdouble(double v);
 
-
-	static void convert(std::string& input);
-}
+	static void convert(std::string &input);
+};
 
 #endif
