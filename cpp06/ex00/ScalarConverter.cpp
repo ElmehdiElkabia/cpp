@@ -215,3 +215,29 @@ void ScalarConverter::printfloat(double v)
 	else
 		std::cout << static_cast<float>(v) << "f" << std::endl;
 }
+
+void ScalarConverter::printdouble(double v)
+{
+	if (std::isnan(v))
+	{
+		std::cout << "nan" << std::endl;
+		return;
+	}
+	if (std::isinf(v))
+	{
+		if (v > 0)
+			std::cout << "+inf" << std::endl;
+		else
+			std::cout << "-inf" << std::endl;
+		return;
+	}
+	if (v < std::numeric_limits<float>::min() || v > std::numeric_limits<float>::max())
+	{
+		std::cout << "impossible" << std::endl;
+		return;
+	}
+	if (v - static_cast<int>(v) == 0)
+		std::cout << static_cast<int>(v) << ".0" << std::endl;
+	else
+		std::cout << static_cast<double>(v) << std::endl;
+}
