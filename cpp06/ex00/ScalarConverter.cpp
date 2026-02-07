@@ -19,6 +19,19 @@ bool ScalarConverter::ischar(const std::string &input)
 			std::isprint(c) &&
 			c != '+' && c != '-');
 }
+// void ScalarConverter::convert(std::string &input)
+// {
+// 	if (ScalarConverter::ischar(input))
+// 		// ScalarConverter::convertfromchar();
+// 	if (ScalarConverter::isint(input))
+// 		// ScalarConverter::convertfromint();
+// 	if (ScalarConverter::isfloat(input))
+// 		// ScalarConverter::convertfromfloat();
+// 	if (ScalarConverter::isdouble(input))
+// 		// ScalarConverter::convertfromdouble();
+// 	if (ScalarConverter::ispseudoliteral(input))
+// 		// ScalarConverter::convertfromdouble();
+// }
 
 bool ScalarConverter::isint(const std::string &input)
 {
@@ -92,4 +105,13 @@ bool ScalarConverter::isdouble(const std::string &input)
 			return false;
 	}
 	return found;
+}
+
+bool ScalarConverter::ispseudoliteral(const std::string &input)
+{
+	if (input.empty())
+		return false;
+	return (input == "-inf" || input == "+inf" ||
+			input == "nan" || input == "-inff" ||
+			input == "+inff" || input == "nanf");
 }
