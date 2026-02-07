@@ -64,7 +64,7 @@ bool ScalarConverter::isfloat(const std::string &input)
 		else if (!std::isdigit(static_cast<unsigned char>(input[i])))
 			return false;
 	}
-	return found && input.back() == 'f';
+	return found && input[i] == 'f';
 }
 
 bool ScalarConverter::isdouble(const std::string &input)
