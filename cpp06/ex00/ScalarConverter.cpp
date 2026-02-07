@@ -154,3 +154,23 @@ void ScalarConverter::convertfromdouble(double v)
 	ScalarConverter::printfloat(v);
 	ScalarConverter::printdouble(v);
 }
+
+void ScalarConverter::printchar(double v)
+{
+	if (std::isnan(v) || std::isinf(v))
+	{
+		std::cout << "impossible" << std::endl;
+		return;
+	}
+	if (v < 0 && v > 127)
+	{
+		std::cout << "impossible" << std::endl;
+		return;
+	}
+	else if (v < 32 || v == 127)
+	{
+		std::cout << "Non displayable" << std::endl;
+		return;
+	}
+	std::cout << "'" << static_cast<char>(v) << "'" << std::endl;
+}
