@@ -115,3 +115,42 @@ bool ScalarConverter::ispseudoliteral(const std::string &input)
 			input == "nan" || input == "-inff" ||
 			input == "+inff" || input == "nanf");
 }
+
+void ScalarConverter::convertfromchar(char v)
+{
+	double d = static_cast<double>(v);
+
+	ScalarConverter::printchar(d);
+	ScalarConverter::printint(d);
+	ScalarConverter::printfloat(d);
+	ScalarConverter::printdouble(d);
+}
+
+void ScalarConverter::convertfromint(int v)
+{
+	double d = static_cast<double>(v);
+
+	ScalarConverter::printchar(d);
+	ScalarConverter::printint(d);
+	ScalarConverter::printfloat(d);
+	ScalarConverter::printdouble(d);
+}
+
+void ScalarConverter::convertfromfloat(float v)
+{
+	double d = static_cast<double>(v);
+
+	ScalarConverter::printchar(d);
+	ScalarConverter::printint(d);
+	ScalarConverter::printfloat(d);
+	ScalarConverter::printdouble(d);
+}
+
+void ScalarConverter::convertfromdouble(double v)
+{
+
+	ScalarConverter::printchar(v);
+	ScalarConverter::printint(v);
+	ScalarConverter::printfloat(v);
+	ScalarConverter::printdouble(v);
+}
