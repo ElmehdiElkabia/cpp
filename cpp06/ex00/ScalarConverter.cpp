@@ -174,3 +174,18 @@ void ScalarConverter::printchar(double v)
 	}
 	std::cout << "'" << static_cast<char>(v) << "'" << std::endl;
 }
+
+void ScalarConverter::printint(double v)
+{
+	if (std::isnan(v) || std::isinf(v))
+	{
+		std::cout << "impossible" << std::endl;
+		return;
+	}
+	if (v < std::numeric_limits<int>::min() || v > std::numeric_limits<int>::max())
+	{
+		std::cout << "impossible" << std::endl;
+		return;
+	}
+	std::cout << static_cast<int>(v) << std::endl;
+}
