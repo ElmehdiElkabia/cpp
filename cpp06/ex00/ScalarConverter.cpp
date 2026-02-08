@@ -12,6 +12,30 @@ ScalarConverter &ScalarConverter::operator=(const ScalarConverter &copy)
 }
 ScalarConverter::~ScalarConverter() {}
 
+
+void ScalarConverter::convert(const std::string &input)
+{
+	if (ScalarConverter::ischar(input))
+		ScalarConverter::convertfromchar(input[0]);
+	else if (ScalarConverter::isint(input))
+	{
+		int value  = std::stoi(input);
+		ScalarConverter::convertfromint(value);
+	}
+	else if (ScalarConverter::isfloat(input))
+	{
+		float value = std::stof(input);
+		ScalarConverter::convertfromfloat(value);
+	}
+	else if (ScalarConverter::isdouble(input))
+	{
+		double value = std::stod(input);
+		ScalarConverter::convertfromdouble(value);
+	}
+	else
+		std::cerr << "Error: Invalid input" << std::endl;
+}
+
 bool ScalarConverter::ischar(const std::string &input)
 {
 	unsigned char c = input[0];
@@ -19,19 +43,6 @@ bool ScalarConverter::ischar(const std::string &input)
 			std::isprint(c) &&
 			c != '+' && c != '-');
 }
-// void ScalarConverter::convert(std::string &input)
-// {
-// 	if (ScalarConverter::ischar(input))
-// 		// ScalarConverter::convertfromchar();
-// 	if (ScalarConverter::isint(input))
-// 		// ScalarConverter::convertfromint();
-// 	if (ScalarConverter::isfloat(input))
-// 		// ScalarConverter::convertfromfloat();
-// 	if (ScalarConverter::isdouble(input))
-// 		// ScalarConverter::convertfromdouble();
-// 	if (ScalarConverter::ispseudoliteral(input))
-// 		// ScalarConverter::convertfromdouble();
-// }
 
 bool ScalarConverter::isint(const std::string &input)
 {
@@ -43,7 +54,7 @@ bool ScalarConverter::isint(const std::string &input)
 		i++;
 	if (input.length() == i)
 		return false;
-	for (; input.length() < i; i++)
+	for (; i < input.length(); i++)
 	{
 		if (!std::isdigit(static_cast<unsigned char>(input[i])))
 			return false;
@@ -66,7 +77,7 @@ bool ScalarConverter::isfloat(const std::string &input)
 	if (input.length() - 1 <= i)
 		return false;
 
-	for (; input.length() - 1 < i; i++)
+	for (; i < input.length() - 1; i++)
 	{
 		if (input[i] == '.')
 		{
@@ -77,7 +88,7 @@ bool ScalarConverter::isfloat(const std::string &input)
 		else if (!std::isdigit(static_cast<unsigned char>(input[i])))
 			return false;
 	}
-	return found && input[i] == 'f';
+	return found && input.back() == 'f';
 }
 
 bool ScalarConverter::isdouble(const std::string &input)
@@ -105,15 +116,6 @@ bool ScalarConverter::isdouble(const std::string &input)
 			return false;
 	}
 	return found;
-}
-
-bool ScalarConverter::ispseudoliteral(const std::string &input)
-{
-	if (input.empty())
-		return false;
-	return (input == "-inf" || input == "+inf" ||
-			input == "nan" || input == "-inff" ||
-			input == "+inff" || input == "nanf");
 }
 
 void ScalarConverter::convertfromchar(char v)
@@ -172,7 +174,7 @@ void ScalarConverter::printchar(double v)
 		std::cout << "Non displayable" << std::endl;
 		return;
 	}
-	std::cout << "'" << static_cast<char>(v) << "'" << std::endl;
+	std::cout << "char: " << "'" << static_cast<char>(v) << "'" << std::endl;
 }
 
 void ScalarConverter::printint(double v)
@@ -187,7 +189,7 @@ void ScalarConverter::printint(double v)
 		std::cout << "impossible" << std::endl;
 		return;
 	}
-	std::cout << static_cast<int>(v) << std::endl;
+	std::cout << "int: " << static_cast<int>(v) << std::endl;
 }
 
 void ScalarConverter::printfloat(double v)
@@ -205,15 +207,15 @@ void ScalarConverter::printfloat(double v)
 			std::cout << "-inff" << std::endl;
 		return;
 	}
-	if (v < std::numeric_limits<float>::min() || v > std::numeric_limits<float>::max())
+	if (v < -std::numeric_limits<float>::max() || v > std::numeric_limits<float>::max())
 	{
 		std::cout << "impossible" << std::endl;
 		return;
 	}
 	if (v - static_cast<int>(v) == 0)
-		std::cout << static_cast<int>(v) << ".0f" << std::endl;
+		std::cout << "float: " << static_cast<int>(v) << ".0f" << std::endl;
 	else
-		std::cout << static_cast<float>(v) << "f" << std::endl;
+		std::cout << "float: " << static_cast<float>(v) << "f" << std::endl;
 }
 
 void ScalarConverter::printdouble(double v)
@@ -231,13 +233,13 @@ void ScalarConverter::printdouble(double v)
 			std::cout << "-inf" << std::endl;
 		return;
 	}
-	if (v < std::numeric_limits<float>::min() || v > std::numeric_limits<float>::max())
+	if (v < -std::numeric_limits<double>::max() || v > std::numeric_limits<double>::max())
 	{
 		std::cout << "impossible" << std::endl;
 		return;
 	}
 	if (v - static_cast<int>(v) == 0)
-		std::cout << static_cast<int>(v) << ".0" << std::endl;
+		std::cout << "double: " << static_cast<int>(v) << ".0" << std::endl;
 	else
-		std::cout << static_cast<double>(v) << std::endl;
+		std::cout << "double: " << static_cast<double>(v) << std::endl;
 }

@@ -3,6 +3,10 @@
 
 #include <iostream>
 #include <cmath>
+#include <limits>
+#include <cstdlib>
+
+
 
 class ScalarConverter
 {
@@ -16,8 +20,6 @@ public:
 	static bool isint(const std::string &input);
 	static bool isfloat(const std::string &input);
 	static bool isdouble(const std::string &input);
-	static bool isdouble(const std::string &input);
-	static bool ispseudoliteral(const std::string &input);
 
 	static void convertfromchar(char v);
 	static void convertfromint(int v);
@@ -29,7 +31,7 @@ public:
 	static void printfloat(double v);
 	static void printdouble(double v);
 
-	static void convert(std::string &input);
+	static void convert(const std::string &input);
 };
 
 #endif
