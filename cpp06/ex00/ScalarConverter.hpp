@@ -21,9 +21,9 @@ public:
 	static bool isfloat(const std::string &input);
 	static bool isdouble(const std::string &input);
 
-	static void convertfromchar(char v);
-	static void convertfromint(int v);
-	static void convertfromfloat(float v);
+	static void convertfromchar(double v);
+	static void convertfromint(double v);
+	static void convertfromfloat(double v);
 	static void convertfromdouble(double v);
 
 	static void printchar(double v);

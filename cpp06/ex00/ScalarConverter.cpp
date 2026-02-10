@@ -12,28 +12,29 @@ ScalarConverter &ScalarConverter::operator=(const ScalarConverter &copy)
 }
 ScalarConverter::~ScalarConverter() {}
 
-
 void ScalarConverter::convert(const std::string &input)
 {
 	if (ScalarConverter::ischar(input))
-		ScalarConverter::convertfromchar(input[0]);
-	else if (ScalarConverter::isint(input))
 	{
-		int value  = std::stoi(input);
-		ScalarConverter::convertfromint(value);
+		ScalarConverter::convertfromchar(static_cast<double>(input[0]));
+		return;
 	}
-	else if (ScalarConverter::isfloat(input))
+
+	char *end;
+	double v = std::strtod(input.c_str(), &end);
+
+	if ((std::string)end != "f" && *end != 0)
 	{
-		float value = std::stof(input);
-		ScalarConverter::convertfromfloat(value);
-	}
-	else if (ScalarConverter::isdouble(input))
-	{
-		double value = std::stod(input);
-		ScalarConverter::convertfromdouble(value);
-	}
-	else
 		std::cerr << "Error: Invalid input" << std::endl;
+		return;
+	}
+
+	if (ScalarConverter::isfloat(input))
+		ScalarConverter::convertfromfloat(v);
+	else if (ScalarConverter::isint(input) && v >= std::numeric_limits<int>::min() && v <= std::numeric_limits<int>::max())
+		ScalarConverter::convertfromint(v);
+	else if (ScalarConverter::isdouble(input) || ScalarConverter::isint(input))
+		ScalarConverter::convertfromdouble(v);
 }
 
 bool ScalarConverter::ischar(const std::string &input)
@@ -79,7 +80,7 @@ bool ScalarConverter::isfloat(const std::string &input)
 
 	for (; i < input.length() - 1; i++)
 	{
-		if (input[i] == '.')
+		if (input[i] == '.' || input[i] == 'e')
 		{
 			if (found)
 				return false;
@@ -88,7 +89,7 @@ bool ScalarConverter::isfloat(const std::string &input)
 		else if (!std::isdigit(static_cast<unsigned char>(input[i])))
 			return false;
 	}
-	return found && input.back() == 'f';
+	return found && input[i] == 'f';
 }
 
 bool ScalarConverter::isdouble(const std::string &input)
@@ -104,7 +105,7 @@ bool ScalarConverter::isdouble(const std::string &input)
 		i++;
 	if (i >= input.length())
 		return false;
-	for (; input.length() < i; i++)
+	for (; i < input.length(); i++)
 	{
 		if (input[i] == '.')
 		{
@@ -118,60 +119,23 @@ bool ScalarConverter::isdouble(const std::string &input)
 	return found;
 }
 
-void ScalarConverter::convertfromchar(char v)
-{
-	double d = static_cast<double>(v);
-
-	ScalarConverter::printchar(d);
-	ScalarConverter::printint(d);
-	ScalarConverter::printfloat(d);
-	ScalarConverter::printdouble(d);
-}
-
-void ScalarConverter::convertfromint(int v)
-{
-	double d = static_cast<double>(v);
-
-	ScalarConverter::printchar(d);
-	ScalarConverter::printint(d);
-	ScalarConverter::printfloat(d);
-	ScalarConverter::printdouble(d);
-}
-
-void ScalarConverter::convertfromfloat(float v)
-{
-	double d = static_cast<double>(v);
-
-	ScalarConverter::printchar(d);
-	ScalarConverter::printint(d);
-	ScalarConverter::printfloat(d);
-	ScalarConverter::printdouble(d);
-}
-
-void ScalarConverter::convertfromdouble(double v)
-{
-
-	ScalarConverter::printchar(v);
-	ScalarConverter::printint(v);
-	ScalarConverter::printfloat(v);
-	ScalarConverter::printdouble(v);
-}
 
 void ScalarConverter::printchar(double v)
 {
+
 	if (std::isnan(v) || std::isinf(v))
 	{
-		std::cout << "impossible" << std::endl;
+		std::cout << "char: impossible" << std::endl;
 		return;
 	}
-	if (v < 0 && v > 127)
+	if (v < 0 || v > 127)
 	{
-		std::cout << "impossible" << std::endl;
+		std::cout << "char: impossible" << std::endl;
 		return;
 	}
 	else if (v < 32 || v == 127)
 	{
-		std::cout << "Non displayable" << std::endl;
+		std::cout << "char: Non displayable" << std::endl;
 		return;
 	}
 	std::cout << "char: " << "'" << static_cast<char>(v) << "'" << std::endl;
@@ -181,12 +145,12 @@ void ScalarConverter::printint(double v)
 {
 	if (std::isnan(v) || std::isinf(v))
 	{
-		std::cout << "impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
 		return;
 	}
 	if (v < std::numeric_limits<int>::min() || v > std::numeric_limits<int>::max())
 	{
-		std::cout << "impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
 		return;
 	}
 	std::cout << "int: " << static_cast<int>(v) << std::endl;
@@ -196,20 +160,20 @@ void ScalarConverter::printfloat(double v)
 {
 	if (std::isnan(v))
 	{
-		std::cout << "nanf" << std::endl;
+		std::cout << "float: nanf" << std::endl;
 		return;
 	}
 	if (std::isinf(v))
 	{
 		if (v > 0)
-			std::cout << "+inff" << std::endl;
+			std::cout << "float: +inff" << std::endl;
 		else
-			std::cout << "-inff" << std::endl;
+			std::cout << "float: -inff" << std::endl;
 		return;
 	}
 	if (v < -std::numeric_limits<float>::max() || v > std::numeric_limits<float>::max())
 	{
-		std::cout << "impossible" << std::endl;
+		std::cout << "float: impossible" << std::endl;
 		return;
 	}
 	if (v - static_cast<int>(v) == 0)
@@ -222,24 +186,60 @@ void ScalarConverter::printdouble(double v)
 {
 	if (std::isnan(v))
 	{
-		std::cout << "nan" << std::endl;
+		std::cout << "double: nan" << std::endl;
 		return;
 	}
 	if (std::isinf(v))
 	{
 		if (v > 0)
-			std::cout << "+inf" << std::endl;
+			std::cout << "double: +inf" << std::endl;
 		else
-			std::cout << "-inf" << std::endl;
+			std::cout << "double: -inf" << std::endl;
 		return;
 	}
 	if (v < -std::numeric_limits<double>::max() || v > std::numeric_limits<double>::max())
 	{
-		std::cout << "impossible" << std::endl;
+		std::cout << "double: impossible" << std::endl;
 		return;
 	}
 	if (v - static_cast<int>(v) == 0)
 		std::cout << "double: " << static_cast<int>(v) << ".0" << std::endl;
 	else
 		std::cout << "double: " << static_cast<double>(v) << std::endl;
+}
+
+
+void ScalarConverter::convertfromchar(double v)
+{
+	ScalarConverter::printchar(v);
+	ScalarConverter::printint(v);
+	ScalarConverter::printfloat(v);
+	ScalarConverter::printdouble(v);
+}
+
+void ScalarConverter::convertfromint(double v)
+{
+
+	ScalarConverter::printchar(v);
+	ScalarConverter::printint(v);
+	ScalarConverter::printfloat(v);
+	ScalarConverter::printdouble(v);
+}
+
+void ScalarConverter::convertfromfloat(double v)
+{
+
+	ScalarConverter::printchar(v);
+	ScalarConverter::printint(v);
+	ScalarConverter::printfloat(v);
+	ScalarConverter::printdouble(v);
+}
+
+void ScalarConverter::convertfromdouble(double v)
+{
+
+	ScalarConverter::printchar(v);
+	ScalarConverter::printint(v);
+	ScalarConverter::printfloat(v);
+	ScalarConverter::printdouble(v);
 }
