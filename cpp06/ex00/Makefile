@@ -1,8 +1,8 @@
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror 
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC = main.cpp ScalarConverter.cpp
+SRC = main.cpp ScalarConverter.cpp checker.cpp convert.cpp print.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
