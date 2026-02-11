@@ -6,7 +6,7 @@
 class Data
 {
 private:
-	std::string text;
+	std::string str;
 	int number;
 
 public:
