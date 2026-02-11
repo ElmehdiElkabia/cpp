@@ -2,6 +2,7 @@
 #define SERIALIZE_HPP
 
 #include <iostream>
+#include "Data.hpp"
 
 class Serialize
 {
