@@ -38,7 +38,6 @@ void identify(Base &p)
 	{
 		(void)dynamic_cast<A &>(p);
 		std::cout << "A" << std::endl;
-		return;
 	}
 	catch (std::exception &)
 	{
@@ -48,7 +47,6 @@ void identify(Base &p)
 	{
 		(void)dynamic_cast<B &>(p);
 		std::cout << "B" << std::endl;
-		return;
 	}
 	catch (std::exception &)
 	{
@@ -58,7 +56,6 @@ void identify(Base &p)
 	{
 		(void)dynamic_cast<C &>(p);
 		std::cout << "C" << std::endl;
-		return;
 	}
 	catch (std::exception &)
 	{
@@ -72,11 +69,11 @@ int main()
 	std::cout << "Generating random object..." << std::endl;
 	Base *ptr = generate();
 
-	// 3. Identify using the pointer function
+	// Identify using the pointer function
 	std::cout << "Identify (pointer):   ";
 	identify(ptr);
 
-	// 4. Identify using the reference function
+	// Identify using the reference function
 	std::cout << "Identify (reference): ";
 	identify(*ptr);
 
