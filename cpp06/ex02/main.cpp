@@ -3,6 +3,10 @@
 #include "B.hpp"
 #include "C.hpp"
 
+#include <cstdlib>
+#include <ctime>
+#include <exception>
+
 Base *generate(void)
 {
 	int i = std::rand() % 3;
@@ -13,6 +17,7 @@ Base *generate(void)
 		return new B();
 	else if (i == 2)
 		return new C();
+	return NULL;
 }
 
 void identify(Base *p)
@@ -23,6 +28,8 @@ void identify(Base *p)
 		std::cout << "B" << std::endl;
 	else if (dynamic_cast<C *>(p))
 		std::cout << "C" << std::endl;
+	else
+		std::cout << "Unknown type" << std::endl;
 }
 
 void identify(Base &p)
@@ -33,9 +40,8 @@ void identify(Base &p)
 		std::cout << "A" << std::endl;
 		return;
 	}
-	catch (std::bad_cast &)
+	catch (std::exception &)
 	{
-		std::cout << "Cast failed" << std::endl;
 	}
 
 	try
@@ -44,9 +50,8 @@ void identify(Base &p)
 		std::cout << "B" << std::endl;
 		return;
 	}
-	catch (std::bad_cast &)
+	catch (std::exception &)
 	{
-		std::cout << "Cast failed" << std::endl;
 	}
 
 	try
@@ -55,8 +60,27 @@ void identify(Base &p)
 		std::cout << "C" << std::endl;
 		return;
 	}
-	catch (std::bad_cast &)
+	catch (std::exception &)
 	{
-		std::cout << "Cast failed" << std::endl;
 	}
+}
+
+int main()
+{
+	std::srand(std::time(NULL));
+
+	std::cout << "Generating random object..." << std::endl;
+	Base *ptr = generate();
+
+	// 3. Identify using the pointer function
+	std::cout << "Identify (pointer):   ";
+	identify(ptr);
+
+	// 4. Identify using the reference function
+	std::cout << "Identify (reference): ";
+	identify(*ptr);
+
+	delete ptr;
+
+	return 0;
 }
