@@ -11,3 +11,13 @@ Serialize &Serialize::operator=(const Serialize &copy)
 }
 
 Serialize::~Serialize() {};
+
+uintptr_t Serialize::serialize(Data *ptr)
+{
+
+}
+
+Data *Serialize::deserialize(uintptr_t raw)
+{
+	
+}
