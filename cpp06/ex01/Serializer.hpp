@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include "Data.hpp"
+#include <stdint.h>
+
 
 class Serialize
 {
