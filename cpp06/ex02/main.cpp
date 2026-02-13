@@ -9,13 +9,15 @@
 
 Base *generate(void)
 {
-	int i = std::rand() % 3;
+	std::srand(std::time(NULL));
 
-	if (i == 0)
+	int random = std::rand() % 3;
+
+	if (random == 0)
 		return new A();
-	else if (i == 1)
+	else if (random == 1)
 		return new B();
-	else if (i == 2)
+	else if (random == 2)
 		return new C();
 	return NULL;
 }
@@ -36,7 +38,7 @@ void identify(Base &p)
 {
 	try
 	{
-		(void)dynamic_cast<A &>(p);
+		A a = dynamic_cast<A &>(p);
 		std::cout << "A" << std::endl;
 	}
 	catch (std::exception &)
@@ -45,7 +47,7 @@ void identify(Base &p)
 
 	try
 	{
-		(void)dynamic_cast<B &>(p);
+		B b = dynamic_cast<B &>(p);
 		std::cout << "B" << std::endl;
 	}
 	catch (std::exception &)
@@ -54,7 +56,7 @@ void identify(Base &p)
 
 	try
 	{
-		(void)dynamic_cast<C &>(p);
+		C c = dynamic_cast<C &>(p);
 		std::cout << "C" << std::endl;
 	}
 	catch (std::exception &)
@@ -64,7 +66,6 @@ void identify(Base &p)
 
 int main()
 {
-	std::srand(std::time(NULL));
 
 	std::cout << "Generating random object..." << std::endl;
 	Base *ptr = generate();
