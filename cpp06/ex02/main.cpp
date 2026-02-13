@@ -24,6 +24,12 @@ Base *generate(void)
 
 void identify(Base *p)
 {
+	if (!p)
+	{
+		std::cout << "Null pointer" << std::endl;
+		return;
+	}
+
 	if (dynamic_cast<A *>(p))
 		std::cout << "A" << std::endl;
 	else if (dynamic_cast<B *>(p))
@@ -40,6 +46,7 @@ void identify(Base &p)
 	{
 		A a = dynamic_cast<A &>(p);
 		std::cout << "A" << std::endl;
+		return;
 	}
 	catch (std::exception &)
 	{
@@ -49,6 +56,7 @@ void identify(Base &p)
 	{
 		B b = dynamic_cast<B &>(p);
 		std::cout << "B" << std::endl;
+		return;
 	}
 	catch (std::exception &)
 	{
@@ -58,10 +66,13 @@ void identify(Base &p)
 	{
 		C c = dynamic_cast<C &>(p);
 		std::cout << "C" << std::endl;
+		return;
 	}
 	catch (std::exception &)
 	{
 	}
+
+	std::cout << "Unknown type" << std::endl;
 }
 
 int main()
