@@ -1,6 +1,6 @@
 #include "iter.hpp"
 
-void incremment(int &i)
+void increment(int &i)
 {
 	i++;
 }
@@ -11,37 +11,65 @@ void toupperchar(char &c)
 		c -= 32;
 }
 
-void print(int &i)
+void print(const int &i)
 {
 	std::cout << "[" << i << "]";
 }
 
-void printchar(char &c)
+void printchar(const char &c)
 {
 	std::cout << c << ";";
+}
+
+void printstring(const std::string &str)
+{
+	std::cout << str << std::endl;
+}
+
+void appendSomething(std::string &str)
+{
+	str += "!";
 }
 
 int main(void)
 {
 	int arrayint[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-	size_t sizeint = sizeof(arrayint) / sizeof(int);
+	const size_t sizeint = sizeof(arrayint) / sizeof(int);
 
 	std::cout << "\n----------- array int -----------\n";
 
-	std::cout << "befor incremment \n";
+	std::cout << "befor increment \n";
 	iter(arrayint, sizeint, print);
-	iter(arrayint, sizeint, incremment);
-	std::cout << "\nafter incremment \n";
+	iter(arrayint, sizeint, increment);
+	std::cout << "\nafter increment \n";
 	iter(arrayint, sizeint, print);
 
 	std::cout << "\n\n----------- array char -----------\n";
 
 	char arraychar[] = {'e', 'd', 'H', 'r', 'o', 'l', 's'};
-	size_t sizechar = sizeof(arraychar) / sizeof(char);
+	const size_t sizechar = sizeof(arraychar) / sizeof(char);
 
 	std::cout << "befor to upper case \n";
 	iter(arraychar, sizechar, printchar);
 	iter(arraychar, sizechar, toupperchar);
 	std::cout << "\nafter to upper case \n";
 	iter(arraychar, sizechar, printchar);
+
+	std::cout << "\n\n----------- array string -----------\n";
+
+	std::string arraystr[] = {
+		"hello",
+		"world",
+		"template",
+		"iter",
+		"function"};
+
+	const size_t sizestr = sizeof(arraystr) / sizeof(std::string);
+
+	std::cout << "before modification\n";
+	iter(arraystr, sizestr, printstring);
+	iter(arraystr, sizestr, appendSomething);
+
+	std::cout << "\nafter modification\n";
+	iter(arraystr, sizestr, printstring);
 }
