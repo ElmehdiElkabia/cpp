@@ -8,8 +8,8 @@ class Array
 {
 	public:
 	Array();
-	Array(unsigned int m)
-}
+	Array(unsigned int n);
+};
 
 
 
