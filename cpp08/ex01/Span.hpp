@@ -24,14 +24,12 @@ public:
 	int shortestSpan();
 	int longestSpan();
 
-
-
 	class ContainerIsFull : public std::exception
 	{
 		virtual const char *what() const throw();
 	};
 
-		class NotEnough : public std::exception
+	class NotEnough : public std::exception
 	{
 		virtual const char *what() const throw();
 	};
