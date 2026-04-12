@@ -93,5 +93,31 @@ int main()
 		std::cout << "Error: " << e.what() << std::endl;
 	}
 
+	std::cout << "\n===== RANGE ADD TEST (vector) =====" << std::endl;
+	try
+	{
+		std::vector<int> vec;
+		vec.push_back(1);
+		vec.push_back(2);
+		vec.push_back(3);
+		vec.push_back(4);
+
+		Span sp(10);
+		sp.addNumber(vec.begin(), vec.end());
+
+		// std::cout << "Vector: ";
+		// for (size_t i = 0; i < vec.size(); i++)
+		// 	std::cout << vec[i] << " ";
+		// std::cout << "\nVector: ";
+		// sp.print();
+
+		std::cout << "\nShortest: " << sp.shortestSpan() << std::endl;
+		std::cout << "Longest: " << sp.longestSpan() << std::endl;
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << "Error: " << e.what() << std::endl;
+	}
+
 	return 0;
 }
