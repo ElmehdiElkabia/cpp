@@ -128,6 +128,39 @@ bool BitcoinExchange::parseLine(const std::string &line, std::string &date, floa
 
 bool BitcoinExchange::isValidDate(const std::string &date) const
 {
+	if (date.length() != 10)
+		return false;
+	if (date[7] != '-' || date[4] != '-')
+		return false;
+
+	for (size_t i = 0; i < date.length(); i++)
+	{
+		if (i == 4 || i == 7)
+			continue;
+		if (!std::isdigit(date[i]))
+			return false;
+	}
+
+	int year = std::atoi(date.substr(0, 4).c_str());
+	int month = std::atoi(date.substr(5, 2).c_str());
+	int day = std::atoi(date.substr(8, 2).c_str());
+
+	if (month < 1 || month > 12)
+		return false;
+
+	int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+	if (month == 2)
+	{
+		bool leap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+		if (leap)
+			daysInMonth[1] = 29;
+	}
+
+	if (day < 1 || day > daysInMonth[month - 1])
+		return false;
+
+	return false;
 }
 
 bool BitcoinExchange::isValidValue(float value) const
