@@ -20,11 +20,11 @@ public:
 	~BitcoinExchange();
 
 	void loadDatabase(const std::string &filename);
-	// void processInput(const std::string &filename);
+	void processInput(const std::string &filename);
 
-	// bool parseLine(const std::string &line, std::string &date, float &value) const;
-	// bool isValidDate(const std::string &date) const;
-	// bool isValidValue(float value) const;
+	bool parseLine(const std::string &line, std::string &date, float &value) const;
+	bool isValidDate(const std::string &date) const;
+	bool isValidValue(float value) const;
 
 	// float getExchangeRate(const std::string &date) const;
 	// std::map<std::string, float>::const_iterator getClosestDate(const std::string &date) const;
