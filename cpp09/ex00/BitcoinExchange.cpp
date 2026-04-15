@@ -41,35 +41,72 @@ void BitcoinExchange::loadDatabase(const std::string &filename)
 	}
 }
 
-// void BitcoinExchange::processInput(const std::string &filename)
+void BitcoinExchange::processInput(const std::string &filename)
+{
+	std::ifstream openfile(filename.c_str());
+
+	if (!openfile.is_open())
+	{
+		std::cerr << "Error: could not open file.\n";
+		return;
+	}
+	std::string line;
+	std::getline(openfile, line);
+	if (line != "date | value")
+	{
+		std::cerr << "Error: line not following format 'date | value'\n";
+		return;
+	}
+	std::string date;
+	float value;
+	while (std::getline(openfile, line))
+	{
+		if (!parseLine(line, date, value))
+		{
+			std::cerr << "Error: parsing line is false.\n";
+			continue;
+		}
+		if (!isValidDate(date))
+		{
+			std::cerr << "Error: is not valid date.\n";
+			continue;
+		}
+		if (!isValidValue(value))
+		{
+			std::cerr << "Error: is not valid value.\n";
+			continue;
+		}
+	}
+}
+
+bool BitcoinExchange::parseLine(const std::string &line, std::string &date, float &value) const
+{
+	size_t position = line.find('|');
+	std::string datePart = line.substr(0,position);
+	std::string valuePart = line.substr(position  - 1);
+}
+
+bool BitcoinExchange::isValidDate(const std::string &date) const
+{
+}
+
+bool BitcoinExchange::isValidValue(float value) const
+{
+}
+
+// float BitcoinExchange::getExchangeRate(const std::string &date) const
 // {
 // }
 
-// bool BitcoinExchange::parseLine(const std::string &line, std::string &data, float &value) const
+// std::map<std::string, float>::const_iterator BitcoinExchange::getClosestDate(const std::string &date) const
 // {
 // }
 
-// bool BitcoinExchange::isValidDate(const std::string &data) const
+// float BitcoinExchange::calculate(const std::string &date, float value) const
 // {
 // }
 
-// bool BitcoinExchange::isValidValue(float value) const
-// {
-// }
-
-// float BitcoinExchange::getExchangeRate(const std::string &data) const
-// {
-// }
-
-// std::map<std::string, float>::const_iterator BitcoinExchange::getClosestDate(const std::string &data) const
-// {
-// }
-
-// float BitcoinExchange::calculate(const std::string &data, float value) const
-// {
-// }
-
-// void BitcoinExchange::printResult(const std::string &data, float value, float result) const
+// void BitcoinExchange::printResult(const std::string &date, float value, float result) const
 // {
 // }
 
@@ -77,10 +114,8 @@ void BitcoinExchange::loadDatabase(const std::string &filename)
 // {
 // }
 
-
-
 void BitcoinExchange::printDatabase() const
 {
-    for (std::map<std::string, float>::const_iterator it = database.begin(); it != database.end(); ++it)
-        std::cout << it->first << " | " << it->second << std::endl;
+	for (std::map<std::string, float>::const_iterator it = database.begin(); it != database.end(); ++it)
+		std::cout << it->first << " | " << it->second << std::endl;
 }
