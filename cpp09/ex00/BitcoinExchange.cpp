@@ -165,6 +165,11 @@ bool BitcoinExchange::isValidDate(const std::string &date) const
 
 bool BitcoinExchange::isValidValue(float value) const
 {
+	if (value < 0)
+		return false; //print "Error: not a positive number."
+	if (value > 1000)
+		return false; //print "Error: too large a number."
+	return true;
 }
 
 // float BitcoinExchange::getExchangeRate(const std::string &date) const
