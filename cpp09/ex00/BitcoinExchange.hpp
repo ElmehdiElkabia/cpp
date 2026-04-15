@@ -4,6 +4,7 @@
 #include <iostream>
 #include <exception>
 #include <iterator>
+#include <algorithm>
 #include <fstream>
 #include <cstdlib>
 #include <map>
