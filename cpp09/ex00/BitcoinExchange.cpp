@@ -79,11 +79,51 @@ void BitcoinExchange::processInput(const std::string &filename)
 	}
 }
 
+static std::string trim(const std::string &str)
+{
+	size_t start = 0;
+	while (start < str.length() && std::isspace(str[start]))
+		start++;
+
+	size_t end = str.length();
+	while (end > start && std::isspace(str[end - 1]))
+		end--;
+
+	return str.substr(start, end - start);
+}
+
 bool BitcoinExchange::parseLine(const std::string &line, std::string &date, float &value) const
 {
 	size_t position = line.find('|');
-	std::string datePart = line.substr(0,position);
-	std::string valuePart = line.substr(position  - 1);
+
+	if (position == std::string::npos)
+		return false;
+
+	std::string datePart = trim(line.substr(0, position));
+	if (datePart.empty())
+		return false;
+
+	std::string valuePart = trim(line.substr(position + 1));
+	if (valuePart.empty())
+		return false;
+
+	char *end;
+	double tmp = std::strtod(valuePart.c_str(), &end);
+
+	if (end == valuePart.c_str())
+		return false;
+
+	while (*end)
+	{
+		if (!std::isspace(*end))
+			return false;
+		end++;
+	}
+
+	date = datePart;
+	value = static_cast<float>(tmp);
+
+	return true;
 }
 
 bool BitcoinExchange::isValidDate(const std::string &date) const
