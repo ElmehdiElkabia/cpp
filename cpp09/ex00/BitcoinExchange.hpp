@@ -27,7 +27,7 @@ public:
 	bool isValidDate(const std::string &date) const;
 	bool isValidValue(float value) const;
 
-	// float getExchangeRate(const std::string &date) const;
+	float getExchangeRate(const std::string &date) const;
 	std::map<std::string, float>::const_iterator getClosestDate(const std::string &date) const;
 
 	// float calculate(const std::string &date, float value) const;
