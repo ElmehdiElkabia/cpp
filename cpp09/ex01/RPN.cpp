@@ -17,3 +17,16 @@ RPN &RPN::operator=(const RPN &copy)
 
 RPN::~RPN(){}
 
+void RPN::evaluate(const std::string &expression)
+{
+    std::istringstream iss(expression);
+    std::string token;
+
+    while (getline(iss, token,' '))
+        processToken(token);
+}
+
+void RPN::processToken(const std::string &token)
+{
+    
+}
