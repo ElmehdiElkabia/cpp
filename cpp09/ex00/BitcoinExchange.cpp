@@ -205,9 +205,10 @@ float BitcoinExchange::calculate(const std::string &date, float value) const
 	return value * rate;
 }
 
-// void BitcoinExchange::printResult(const std::string &date, float value, float result) const
-// {
-// }
+void BitcoinExchange::printResult(const std::string &date, float value, float result) const
+{
+	std::cout << date << " => " << value << " = " << result << std::endl;
+}
 
 // void BitcoinExchange::handleError(const std::string &message) const
 // {
