@@ -176,9 +176,21 @@ bool BitcoinExchange::isValidValue(float value) const
 // {
 // }
 
-// std::map<std::string, float>::const_iterator BitcoinExchange::getClosestDate(const std::string &date) const
-// {
-// }
+std::map<std::string, float>::const_iterator BitcoinExchange::getClosestDate(const std::string &date) const
+{
+	if (database.empty())
+		return database.end();
+	
+	std::map<std::string, float>::const_iterator it = database.lower_bound(date);
+
+	if (it == database.begin() && it->first > date)
+		return database.end();
+	if (it != database.end() && it->first == date)
+		return it;
+	if (it == database.end() || it->first > date)
+		--it;
+	return it;
+}
 
 // float BitcoinExchange::calculate(const std::string &date, float value) const
 // {
