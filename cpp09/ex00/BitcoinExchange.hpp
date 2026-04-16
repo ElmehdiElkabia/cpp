@@ -30,7 +30,7 @@ public:
 	float getExchangeRate(const std::string &date) const;
 	std::map<std::string, float>::const_iterator getClosestDate(const std::string &date) const;
 
-	// float calculate(const std::string &date, float value) const;
+	float calculate(const std::string &date, float value) const;
 	// void printResult(const std::string &date, float value, float result) const;
 	// void handleError(const std::string &message) const;
 
