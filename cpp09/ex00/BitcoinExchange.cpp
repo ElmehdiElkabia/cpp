@@ -76,6 +76,7 @@ void BitcoinExchange::processInput(const std::string &filename)
 			std::cerr << "Error: is not valid value.\n";
 			continue;
 		}
+		float result = calculate(date,value);
 	}
 }
 
@@ -197,9 +198,12 @@ std::map<std::string, float>::const_iterator BitcoinExchange::getClosestDate(con
 	return it;
 }
 
-// float BitcoinExchange::calculate(const std::string &date, float value) const
-// {
-// }
+float BitcoinExchange::calculate(const std::string &date, float value) const
+{
+	float rate = getExchangeRate(date);
+
+	return value * rate;
+}
 
 // void BitcoinExchange::printResult(const std::string &date, float value, float result) const
 // {
