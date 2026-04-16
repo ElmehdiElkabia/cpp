@@ -77,6 +77,8 @@ void BitcoinExchange::processInput(const std::string &filename)
 			continue;
 		}
 		float result = calculate(date,value);
+
+		printResult(date, value, result);
 	}
 }
 
@@ -161,7 +163,7 @@ bool BitcoinExchange::isValidDate(const std::string &date) const
 	if (day < 1 || day > daysInMonth[month - 1])
 		return false;
 
-	return false;
+	return true;
 }
 
 bool BitcoinExchange::isValidValue(float value) const
