@@ -9,18 +9,18 @@ int main(int argc, char **argv)
 		return (1);
 	}
 
-	// try
-	// {
+	try
+	{
 		BitcoinExchange btc;
 
 		btc.loadDatabase("data.csv");
-		btc.printDatabase();
-		// btc.processInput(argv[1]);
+		// btc.printDatabase();
+		btc.processInput(argv[1]);
 
-	// }
-	// catch (const std::exception &e)
-	// {
-	// 	std::cerr << e.what() << '\n';
-	// }
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << e.what() << '\n';
+	}
 	return 0;
 }
