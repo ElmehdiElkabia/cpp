@@ -172,9 +172,14 @@ bool BitcoinExchange::isValidValue(float value) const
 	return true;
 }
 
-// float BitcoinExchange::getExchangeRate(const std::string &date) const
-// {
-// }
+float BitcoinExchange::getExchangeRate(const std::string &date) const
+{
+	std::map<std::string, float>::const_iterator it = getClosestDate(date);
+
+	if (it == database.end())
+		throw std::runtime_error("Error: no exchange rate available for the given date.");
+	return it->second;
+}
 
 std::map<std::string, float>::const_iterator BitcoinExchange::getClosestDate(const std::string &date) const
 {
