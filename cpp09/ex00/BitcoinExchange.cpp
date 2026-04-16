@@ -17,71 +17,6 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &copy)
 
 BitcoinExchange::~BitcoinExchange() {}
 
-void BitcoinExchange::loadDatabase(const std::string &filename)
-{
-	std::ifstream openfile(filename.c_str());
-
-	if (!openfile.is_open())
-	{
-		std::cerr << "Error: could not open file.\n";
-		return;
-	}
-	std::string line;
-	std::getline(openfile, line);
-	while (std::getline(openfile, line))
-	{
-		size_t position = line.find(',');
-		if (position == std::string::npos)
-			continue;
-		std::string datePart = line.substr(0, position);
-		std::string pricePart = line.substr(position + 1);
-
-		float price = std::strtof(pricePart.c_str(), NULL);
-		database[datePart] = price;
-	}
-}
-
-void BitcoinExchange::processInput(const std::string &filename)
-{
-	std::ifstream openfile(filename.c_str());
-
-	if (!openfile.is_open())
-	{
-		std::cerr << "Error: could not open file.\n";
-		return;
-	}
-	std::string line;
-	std::getline(openfile, line);
-	if (line != "date | value")
-	{
-		std::cerr << "Error: line not following format 'date | value'\n";
-		return;
-	}
-	std::string date;
-	float value;
-	while (std::getline(openfile, line))
-	{
-		if (!parseLine(line, date, value))
-		{
-			std::cerr << "Error: parsing line is false.\n";
-			continue;
-		}
-		if (!isValidDate(date))
-		{
-			std::cerr << "Error: is not valid date.\n";
-			continue;
-		}
-		if (!isValidValue(value))
-		{
-			std::cerr << "Error: is not valid value.\n";
-			continue;
-		}
-		float result = calculate(date,value);
-
-		printResult(date, value, result);
-	}
-}
-
 static std::string trim(const std::string &str)
 {
 	size_t start = 0;
@@ -95,6 +30,73 @@ static std::string trim(const std::string &str)
 	return str.substr(start, end - start);
 }
 
+void BitcoinExchange::loadDatabase(const std::string &filename)
+{
+	std::ifstream openfile(filename.c_str());
+
+	if (!openfile.is_open())
+		throw std::runtime_error("Error: could not open file.");
+	std::string line;
+	if (!std::getline(openfile, line))
+		throw std::runtime_error("Error: empty database file.");
+	while (std::getline(openfile, line))
+	{
+		if (line.empty())
+			continue;
+		size_t position = line.find(',');
+		if (position == std::string::npos)
+			continue;
+		std::string datePart = trim(line.substr(0, position));
+		std::string pricePart = trim(line.substr(position + 1));
+
+		char *end;
+		double tmp = std::strtod(pricePart.c_str(), &end);
+		if (end == pricePart.c_str())
+			continue;
+		while (*end)
+		{
+			if (!std::isspace(*end))
+				continue;
+			end++;
+		}
+		database[datePart] = static_cast<float>(tmp);
+	}
+}
+
+void BitcoinExchange::processInput(const std::string &filename)
+{
+	std::ifstream openfile(filename.c_str());
+
+	if (!openfile.is_open())
+		throw std::runtime_error("Error: could not open file.");
+	std::string line;
+	std::getline(openfile, line);
+	line = trim(line);
+	if (line.empty())
+		throw std::runtime_error("Error: empty file.");
+	if (line != "date | value")
+		throw std::runtime_error("Error: bad header => " + line);
+	std::string date;
+	float value;
+	while (std::getline(openfile, line))
+	{
+		try
+		{
+			if (!parseLine(line, date, value))
+				throw std::runtime_error("Error: bad input => " + line);
+			if (!isValidDate(date))
+				throw std::runtime_error("Error: bad date => " + date);
+			isValidValue(value);
+			float result = calculate(date,value);
+			printResult(date, value, result);
+		}
+		catch (const std::exception &e)
+		{
+			std::cerr << e.what() << '\n';
+		}
+	}
+}
+
 bool BitcoinExchange::parseLine(const std::string &line, std::string &date, float &value) const
 {
 	size_t position = line.find('|');
@@ -104,22 +106,22 @@ bool BitcoinExchange::parseLine(const std::string &line, std::string &date, floa
 
 	std::string datePart = trim(line.substr(0, position));
 	if (datePart.empty())
-		return false;
+		throw std::runtime_error("Error: empty date => " + line);
 
 	std::string valuePart = trim(line.substr(position + 1));
 	if (valuePart.empty())
-		return false;
+		throw std::runtime_error("Error: empty value => " + line);
 
 	char *end;
 	double tmp = std::strtod(valuePart.c_str(), &end);
 
 	if (end == valuePart.c_str())
-		return false;
+		throw std::runtime_error("Error: invalid value => " + line);
 
 	while (*end)
 	{
 		if (!std::isspace(*end))
-			return false;
+			throw std::runtime_error("Error: invalid value => " + line);
 		end++;
 	}
 
@@ -169,9 +171,11 @@ bool BitcoinExchange::isValidDate(const std::string &date) const
 bool BitcoinExchange::isValidValue(float value) const
 {
 	if (value < 0)
-		return false; //print "Error: not a positive number."
+	{
+		throw std::runtime_error("Error: not a positive number.");
+	}
 	if (value > 1000)
-		return false; //print "Error: too large a number."
+		throw std::runtime_error("Error: too large a number.");
 	return true;
 }
 
@@ -212,9 +216,7 @@ void BitcoinExchange::printResult(const std::string &date, float value, float re
 	std::cout << date << " => " << value << " = " << result << std::endl;
 }
 
-// void BitcoinExchange::handleError(const std::string &message) const
-// {
-// }
+
 
 void BitcoinExchange::printDatabase() const
 {
