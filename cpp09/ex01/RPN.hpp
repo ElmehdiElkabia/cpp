@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <stack>
+#include <sstream>
+#include <algorithm>
+#include <exception>
 
 
 class RPN
@@ -18,9 +21,9 @@ class RPN
         void evaluate(const std::string &expression);
         void processToken(const std::string &token);
         bool isOperator(const std::string &token) const;
-        int applyOperator(const std::string &op);
+        void applyOperator(const std::string &op);
         void printResult() const;
-}
+};
 
 
 
