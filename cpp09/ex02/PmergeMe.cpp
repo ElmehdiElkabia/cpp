@@ -73,3 +73,13 @@ void PmergeMe::parseInput(char **argv)
         c_deque.push_back(value);
     }
 }
+
+void PmergeMe::printBefore() const
+{
+    std::cout << "Before: ";
+    for (size_t i = 0; i < c_vector.size(); ++i)
+    {
+        std::cout << c_vector[i] << " ";
+    }
+    std::cout << std::endl;
+}
