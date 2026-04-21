@@ -152,6 +152,13 @@ void PmergeMe::sortEachPairVector(std::vector< std::pair<int, int> > &pairs)
 
 void PmergeMe::splitPairsVector(const std::vector< std::pair<int, int> > &pairs, std::vector<int> &small, std::vector<int> &big)
 {
+    small.clear();
+    big.clear();
+    for (size_t i = 0; i < pairs.size(); ++i)
+    {
+        small.push_back(pairs[i].first);
+        big.push_back(pairs[i].second);
+    }
 }
 
 void PmergeMe::binaryInsertVector(std::vector<int> &sorted, int value)
