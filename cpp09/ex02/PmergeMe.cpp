@@ -93,3 +93,9 @@ void PmergeMe::printAfter() const
     }
     std::cout << std::endl;
 }
+
+void PmergeMe::printTimeVector(double time) const
+{
+    std::cout << "Time to process a range of " << c_vector.size() << " elements with std::vector: " << time << " seconds" << std::endl;
+}
+
