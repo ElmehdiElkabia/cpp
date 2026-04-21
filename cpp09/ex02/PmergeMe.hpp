@@ -27,8 +27,7 @@ public:
 	void printTimeDeque(double time) const;
 
     void sortVector();
-    void sortDeque();
-
+	
 	std::vector<int> fordJohnsonVector(const std::vector<int> &input);
     void makePairsVector(const std::vector<int> &input, std::vector< std::pair<int, int> > &pairs, bool &hasStraggler, int &straggler);
     void sortEachPairVector(std::vector< std::pair<int, int> > &pairs);
@@ -36,7 +35,8 @@ public:
 	void binaryInsertVector(std::vector<int> &sorted, int value);
 	size_t binarySearchPositionVector(const std::vector<int> &sorted, int value) const;
     std::vector<size_t> buildJacobsthalOrder(size_t n) const;
-
+	
+    void sortDeque();
 
 	std::deque<int> fordJohnsonDeque(const std::deque<int> &input);
     void makePairsDeque(const std::deque<int> &input, std::deque< std::pair<int, int> > &pairs, bool &hasStraggler, int &straggler);
