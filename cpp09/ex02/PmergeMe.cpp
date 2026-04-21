@@ -115,3 +115,34 @@ void PmergeMe::printTimeDeque(double time) const
     std::cout << "Time to process a range of " << c_deque.size() << " elements with std::deque: " << time << " seconds" << std::endl;
 }
 
+void PmergeMe::sortVector()
+{
+}
+
+std::vector<int> PmergeMe::fordJohnsonVector(const std::vector<int> &input)
+{
+}
+
+void PmergeMe::makePairsVector(const std::vector<int> &input, std::vector< std::pair<int, int> > &pairs, bool &hasStraggler, int &straggler)
+{
+}
+
+void PmergeMe::sortEachPairVector(std::vector< std::pair<int, int> > &pairs)
+{
+}
+
+void PmergeMe::splitPairsVector(const std::vector< std::pair<int, int> > &pairs, std::vector<int> &small, std::vector<int> &big)
+{
+}
+
+void PmergeMe::binaryInsertVector(std::vector<int> &sorted, int value)
+{
+}
+
+size_t PmergeMe::binarySearchPositionVector(const std::vector<int> &sorted, int value) const
+{
+}
+
+std::vector<size_t> PmergeMe::buildJacobsthalOrder(size_t n) const
+{
+}
