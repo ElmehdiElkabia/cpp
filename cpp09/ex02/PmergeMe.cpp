@@ -137,6 +137,8 @@ void PmergeMe::splitPairsVector(const std::vector< std::pair<int, int> > &pairs,
 
 void PmergeMe::binaryInsertVector(std::vector<int> &sorted, int value)
 {
+    size_t position = binarySearchPositionVector(sorted, value);
+    sorted.insert(sorted.begin() + position, value);
 }
 
 size_t PmergeMe::binarySearchPositionVector(const std::vector<int> &sorted, int value) const
