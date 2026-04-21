@@ -117,6 +117,8 @@ void PmergeMe::printTimeDeque(double time) const
 
 void PmergeMe::sortVector()
 {
+    std::vector<int> sorted = c_vector;
+    sorted = fordJohnsonVector(sorted);
 }
 
 std::vector<int> PmergeMe::fordJohnsonVector(const std::vector<int> &input)
@@ -204,4 +206,20 @@ size_t PmergeMe::binarySearchPositionVector(const std::vector<int> &sorted, int 
 
 std::vector<size_t> PmergeMe::buildJacobsthalOrder(size_t n) const
 {
+    std::vector<size_t> order;
+    size_t j1 = 1, j2 = 1, j3 = 2;
+    while (order.size() < n)
+    {
+        if (j1 < n)
+            order.push_back(j1);
+        if (j2 < n)
+            order.push_back(j2);
+        if (j3 < n)
+            order.push_back(j3);
+        size_t next = j1 + j2 + j3;
+        j1 = j2;
+        j2 = j3;
+        j3 = next;
+    }
+    return order;
 }
