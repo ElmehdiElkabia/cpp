@@ -313,3 +313,20 @@ size_t PmergeMe::binarySearchPositionDeque(const std::deque<int> &sorted, int va
     return low;
 }
 
+double PmergeMe::measureVectorSort()
+{
+    clock_t start = clock();
+    sortVector();
+    clock_t end = clock();
+    double time = static_cast<double>(end - start) / CLOCKS_PER_SEC;
+    return time;
+}
+
+double PmergeMe::measureDequeSort()
+{
+    clock_t start = clock();
+    sortDeque();
+    clock_t end = clock();
+    double time = static_cast<double>(end - start) / CLOCKS_PER_SEC;
+    return time;
+}
