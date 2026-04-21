@@ -143,6 +143,11 @@ void PmergeMe::makePairsVector(const std::vector<int> &input, std::vector< std::
 
 void PmergeMe::sortEachPairVector(std::vector< std::pair<int, int> > &pairs)
 {
+    for (size_t i = 0; i < pairs.size() ; ++i)
+    {
+        if (pairs[i].first > pairs[i].second)
+            std::swap(pairs[i].first, pairs[i].second);
+    }
 }
 
 void PmergeMe::splitPairsVector(const std::vector< std::pair<int, int> > &pairs, std::vector<int> &small, std::vector<int> &big)
