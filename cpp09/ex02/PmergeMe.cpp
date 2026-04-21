@@ -33,7 +33,7 @@ void PmergeMe::run(char **argv)
 void PmergeMe::parseInput(char **argv)
 {
     std::string token;
-    for (int i = 1; argv[i] != nullptr; ++i)
+    for (int i = 1; argv[i] != NULL; ++i)
     {
         token = argv[i];
         if (!isValidInput(token))
@@ -68,7 +68,7 @@ int PmergeMe::toInt(const std::string &token) const
 {
     try
     {
-        long long value = std::stoll(token);
+        long long value = std::strtoll(token.c_str(), NULL, 10);
         if (value < 0 || value > std::numeric_limits<int>::max())
             throw std::out_of_range("Value out of range");
         return static_cast<int>(value);
@@ -117,8 +117,8 @@ void PmergeMe::printTimeDeque(double time) const
 
 void PmergeMe::sortVector()
 {
-    std::vector<int> sorted = c_vector;
-    sorted = fordJohnsonVector(sorted);
+    // std::vector<int> sorted = c_vector;
+    c_vector = fordJohnsonVector(c_vector);
 }
 
 std::vector<int> PmergeMe::fordJohnsonVector(const std::vector<int> &input)
@@ -329,24 +329,4 @@ double PmergeMe::measureDequeSort()
     clock_t end = clock();
     double time = static_cast<double>(end - start) / CLOCKS_PER_SEC;
     return time;
-}
-
-bool PmergeMe::isSortedVector(const std::vector<int> &vec) const
-{
-    for (size_t i = 1; i < vec.size(); ++i)
-    {
-        if (vec[i] < vec [i - 1])
-            return false;
-    }
-    return true;
-}
-
-bool PmergeMe::isSortedDeque(const std::deque<int> &deq) const
-{
-    for (size_t i = 1; i < deq.size(); ++i)
-    {
-        if (deq[i] < deq[i - 1])
-            return false;
-    }
-    return true;
 }
