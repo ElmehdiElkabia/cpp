@@ -141,6 +141,18 @@ void PmergeMe::binaryInsertVector(std::vector<int> &sorted, int value)
 
 size_t PmergeMe::binarySearchPositionVector(const std::vector<int> &sorted, int value) const
 {
+    size_t low = 0;
+    size_t high = sorted.size();
+
+    while (low < high)
+    {
+        size_t mid = low + (high - low) / 2;
+        if (sorted[mid] < value)
+            low = mid + 1;
+        else
+            high = mid;
+    }
+    return low;
 }
 
 std::vector<size_t> PmergeMe::buildJacobsthalOrder(size_t n) const
