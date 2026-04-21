@@ -125,6 +125,20 @@ std::vector<int> PmergeMe::fordJohnsonVector(const std::vector<int> &input)
 
 void PmergeMe::makePairsVector(const std::vector<int> &input, std::vector< std::pair<int, int> > &pairs, bool &hasStraggler, int &straggler)
 {
+    pairs.clear();
+    hasStraggler = false;
+    for (size_t i = 0; i < input.size() ; i += 2)
+    {
+        if (i + 1 < input.size())
+        {
+            pairs.push_back(std::make_pair(input[i], input[i + 1]));
+        }
+        else
+        {
+            hasStraggler = true;
+            straggler = input[i];
+        }
+    }
 }
 
 void PmergeMe::sortEachPairVector(std::vector< std::pair<int, int> > &pairs)
