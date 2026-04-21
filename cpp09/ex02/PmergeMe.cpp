@@ -99,3 +99,7 @@ void PmergeMe::printTimeVector(double time) const
     std::cout << "Time to process a range of " << c_vector.size() << " elements with std::vector: " << time << " seconds" << std::endl;
 }
 
+void PmergeMe::printTimeDeque(double time) const
+{
+    std::cout << "Time to process a range of " << c_deque.size() << " elements with std::deque: " << time << " seconds" << std::endl;
+}
