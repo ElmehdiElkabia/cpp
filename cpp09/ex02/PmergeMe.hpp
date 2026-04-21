@@ -22,7 +22,7 @@ public:
 	bool hasDuplicate(int value) const;
 
 	void printBefore() const;
-	void printAfter(const std::vector<int> &sortedVec, const std::deque<int> &sortedDeq) const;
+	void printAfter() const;
 	void printTimeVector(double time) const;
 	void printTimeDeque(double time) const;
 

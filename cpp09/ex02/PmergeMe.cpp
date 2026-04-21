@@ -83,3 +83,13 @@ void PmergeMe::printBefore() const
     }
     std::cout << std::endl;
 }
+
+void PmergeMe::printAfter() const
+{
+    std::cout << "After: ";
+    for (size_t i = 0; i < c_vector.size(); ++i)
+    {
+        std::cout << c_vector[i] << " ";
+    }
+    std::cout << std::endl;
+}
