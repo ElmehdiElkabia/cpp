@@ -330,3 +330,23 @@ double PmergeMe::measureDequeSort()
     double time = static_cast<double>(end - start) / CLOCKS_PER_SEC;
     return time;
 }
+
+bool PmergeMe::isSortedVector(const std::vector<int> &vec) const
+{
+    for (size_t i = 1; i < vec.size(); ++i)
+    {
+        if (vec[i] < vec [i - 1])
+            return false;
+    }
+    return true;
+}
+
+bool PmergeMe::isSortedDeque(const std::deque<int> &deq) const
+{
+    for (size_t i = 1; i < deq.size(); ++i)
+    {
+        if (deq[i] < deq[i - 1])
+            return false;
+    }
+    return true;
+}
