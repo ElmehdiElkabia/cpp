@@ -36,6 +36,22 @@ bool PmergeMe::hasDuplicate(int value) const
     return std::find(c_vector.begin(), c_vector.end(), value) != c_vector.end();
 }
 
+int PmergeMe::toInt(const std::string &token) const
+{
+    try
+    {
+        long long value = std::stoll(token);
+        if (value < 0 || value > std::numeric_limits<int>::max())
+            throw std::out_of_range("Value out of range");
+        return static_cast<int>(value);
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Error: " << e.what() << " for input '" << token << "'." << std::endl;
+        exit(EXIT_FAILURE);
+    }
+}
+
 void PmergeMe::parseInput(char **argv)
 {
     std::string token;
