@@ -223,3 +223,93 @@ std::vector<size_t> PmergeMe::buildJacobsthalOrder(size_t n) const
     }
     return order;
 }
+
+void PmergeMe::sortDeque()
+{
+    std::deque<int> sorted = c_deque;
+    sorted = fordJohnsonDeque(sorted);
+}
+
+std::deque<int> PmergeMe::fordJohnsonDeque(const std::deque<int> &input)
+{
+    if (input.size() <= 1)
+        return input;
+    std::deque< std::pair<int, int> > pairs;
+    bool hasStraggler;
+    int straggler;
+    makePairsDeque(input, pairs, hasStraggler, straggler);
+    sortEachPairDeque(pairs);
+    std::deque<int> small, big;
+    splitPairsDeque(pairs, small, big);
+    std::deque<int> sortedBig = fordJohnsonDeque(big);
+    for (size_t i = 0; i < small.size(); ++i)
+    {
+        binaryInsertDeque(sortedBig, small[i]);
+    }
+    if (hasStraggler)
+    {
+        binaryInsertDeque(sortedBig, straggler);
+    }
+    return sortedBig;
+}
+
+void PmergeMe::makePairsDeque(const std::deque<int> &input, std::deque< std::pair<int, int> > &pairs, bool &hasStraggler, int &straggler)
+{
+    pairs.clear();
+    hasStraggler = false;
+    for (size_t i = 0; i < input.size() ; i += 2)
+    {
+        if (i + 1 < input.size())
+        {
+            pairs.push_back(std::make_pair(input[i], input[i + 1]));
+        }
+        else
+        {
+            hasStraggler = true;
+            straggler = input[i];
+        }
+    }
+}
+
+void PmergeMe::sortEachPairDeque(std::deque< std::pair<int, int> > &pairs)
+{
+    for (size_t i = 0; i < pairs.size() ; ++i)
+    {
+        if (pairs[i].first > pairs[i].second)
+            std::swap(pairs[i].first, pairs[i].second);
+    }
+}
+
+void PmergeMe::splitPairsDeque(const std::deque< std::pair<int, int> > &pairs, std::deque<int> &small, std::deque<int> &big)
+{
+    small.clear();
+    big.clear();
+    for (size_t i = 0; i < pairs.size(); ++i)
+    {
+        small.push_back(pairs[i].first);
+        big.push_back(pairs[i].second);
+    }
+}
+
+void PmergeMe::binaryInsertDeque(std::deque<int> &sorted, int value)
+{
+    size_t position = binarySearchPositionDeque(sorted, value);
+    sorted.insert(sorted.begin() + position, value);
+}
+
+size_t PmergeMe::binarySearchPositionDeque(const std::deque<int> &sorted, int value) const
+{
+    size_t low = 0;
+    size_t high = sorted.size();
+
+    while (low < high)
+    {
+        size_t mid = low + (high - low) / 2;
+        if (sorted[mid] < value)
+            low = mid + 1;
+        else
+            high = mid;
+    }
+    return low;
+}
+
