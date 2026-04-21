@@ -19,37 +19,15 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &copy)
 
 PmergeMe::~PmergeMe() {}
 
-bool PmergeMe::isValidInput(const std::string &token) const
+void PmergeMe::run(char **argv)
 {
-    if (token.empty())
-        return false;
-    for (size_t i = 0; i < token.size(); ++i)
-    {
-        if (!std::isdigit(token[i]))
-            return false;
-    }
-    return true;
-}
-
-bool PmergeMe::hasDuplicate(int value) const
-{
-    return std::find(c_vector.begin(), c_vector.end(), value) != c_vector.end();
-}
-
-int PmergeMe::toInt(const std::string &token) const
-{
-    try
-    {
-        long long value = std::stoll(token);
-        if (value < 0 || value > std::numeric_limits<int>::max())
-            throw std::out_of_range("Value out of range");
-        return static_cast<int>(value);
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << "Error: " << e.what() << " for input '" << token << "'." << std::endl;
-        exit(EXIT_FAILURE);
-    }
+    parseInput(argv);
+    printBefore();
+    double vectorTime = measureVectorSort();
+    double dequeTime = measureDequeSort();
+    printAfter();
+    printTimeVector(vectorTime);
+    printTimeDeque(dequeTime);
 }
 
 void PmergeMe::parseInput(char **argv)
@@ -72,6 +50,39 @@ void PmergeMe::parseInput(char **argv)
         c_vector.push_back(value);
         c_deque.push_back(value);
     }
+}
+
+bool PmergeMe::isValidInput(const std::string &token) const
+{
+    if (token.empty())
+        return false;
+    for (size_t i = 0; i < token.size(); ++i)
+    {
+        if (!std::isdigit(token[i]))
+            return false;
+    }
+    return true;
+}
+
+int PmergeMe::toInt(const std::string &token) const
+{
+    try
+    {
+        long long value = std::stoll(token);
+        if (value < 0 || value > std::numeric_limits<int>::max())
+            throw std::out_of_range("Value out of range");
+        return static_cast<int>(value);
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Error: " << e.what() << " for input '" << token << "'." << std::endl;
+        exit(EXIT_FAILURE);
+    }
+}
+
+bool PmergeMe::hasDuplicate(int value) const
+{
+    return std::find(c_vector.begin(), c_vector.end(), value) != c_vector.end();
 }
 
 void PmergeMe::printBefore() const
@@ -103,3 +114,4 @@ void PmergeMe::printTimeDeque(double time) const
 {
     std::cout << "Time to process a range of " << c_deque.size() << " elements with std::deque: " << time << " seconds" << std::endl;
 }
+
