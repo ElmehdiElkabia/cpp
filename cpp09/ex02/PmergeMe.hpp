@@ -1,6 +1,13 @@
 #ifndef PMERGEME_HPP
 #define PMERGEME_HPP
 
+#include <iostream>
+#include <vector>
+#include <deque>
+#include <algorithm>
+#include <ctime>
+#include <limits>
+#include <exception>
 
 class PmergeMe
 {
@@ -47,9 +54,7 @@ public:
 
     double measureVectorSort();
     double measureDequeSort();
-    
-    bool isSortedVector(const std::vector<int> &vec) const;
-    bool isSortedDeque(const std::deque<int> &deq) const;
+
 };
 
 #endif
