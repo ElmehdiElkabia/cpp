@@ -19,6 +19,17 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &copy)
 
 PmergeMe::~PmergeMe() {}
 
+bool PmergeMe::isValidInput(const std::string &token) const
+{
+    if (token.empty())
+        return false;
+    for (size_t i = 0; i < token.size(); ++i)
+    {
+        if (!std::isdigit(token[i]))
+            return false;
+    }
+    return true;
+}
 
 void PmergeMe::parseInput(char **argv)
 {
