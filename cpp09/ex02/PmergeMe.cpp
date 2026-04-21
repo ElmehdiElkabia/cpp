@@ -31,6 +31,11 @@ bool PmergeMe::isValidInput(const std::string &token) const
     return true;
 }
 
+bool PmergeMe::hasDuplicate(int value) const
+{
+    return std::find(c_vector.begin(), c_vector.end(), value) != c_vector.end();
+}
+
 void PmergeMe::parseInput(char **argv)
 {
     std::string token;
