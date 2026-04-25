@@ -15,6 +15,21 @@ private:
 	std::vector<int> c_vector;
 	std::deque<int> c_deque;
 
+	template <typename Container, typename PairContainer>
+	Container fordJohnsonImpl(const Container &input) const;
+
+	template <typename Container, typename PairContainer>
+	void makePairsImpl(const Container &input, PairContainer &pairs, bool &hasStraggler, int &straggler) const;
+
+	template <typename PairContainer>
+	void sortEachPairImpl(PairContainer &pairs) const;
+
+	template <typename PairContainer, typename Container>
+	void splitPairsImpl(const PairContainer &pairs, Container &small, Container &big) const;
+
+	template <typename Container>
+	void insertImpl(Container &sorted, int value) const;
+
 public:
 	PmergeMe();
 	PmergeMe(const PmergeMe &copy);
@@ -33,27 +48,90 @@ public:
 	void printTimeVector(double time) const;
 	void printTimeDeque(double time) const;
 
-    void sortVector();
-	
+	void sortVector();
 	std::vector<int> fordJohnsonVector(const std::vector<int> &input);
-    void makePairsVector(const std::vector<int> &input, std::vector< std::pair<int, int> > &pairs, bool &hasStraggler, int &straggler);
-    void sortEachPairVector(std::vector< std::pair<int, int> > &pairs);
-    void splitPairsVector(const std::vector< std::pair<int, int> > &pairs, std::vector<int> &small, std::vector<int> &big);
-	void InsertVector(std::vector<int> &sorted, int value);
-    std::vector<size_t> buildJacobsthalOrder(size_t n) const;
-	
-    void sortDeque();
+	std::vector<size_t> buildJacobsthalOrder(size_t n) const;
 
+	void sortDeque();
 	std::deque<int> fordJohnsonDeque(const std::deque<int> &input);
-    void makePairsDeque(const std::deque<int> &input, std::deque< std::pair<int, int> > &pairs, bool &hasStraggler, int &straggler);
-    void sortEachPairDeque(std::deque< std::pair<int, int> > &pairs);
-    void splitPairsDeque(const std::deque< std::pair<int, int> > &pairs, std::deque<int> &small, std::deque<int> &big);
-	void InsertDeque(std::deque<int> &sorted, int value);
-	size_t binarySearchPositionDeque(const std::deque<int> &sorted, int value) const;
 
-    double measureVectorSort();
-    double measureDequeSort();
-
+	double measureVectorSort();
+	double measureDequeSort();
 };
+
+template <typename Container, typename PairContainer>
+Container PmergeMe::fordJohnsonImpl(const Container &input) const
+{
+	if (input.size() <= 1)
+		return input;
+	PairContainer pairs;
+	bool hasStraggler = false;
+	int straggler = 0;
+	makePairsImpl<Container, PairContainer>(input, pairs, hasStraggler, straggler);
+	sortEachPairImpl<PairContainer>(pairs);
+	Container small;
+	Container big;
+	splitPairsImpl<PairContainer, Container>(pairs, small, big);
+	Container sortedBig = fordJohnsonImpl<Container, PairContainer>(big);
+	std::vector<size_t> order = buildJacobsthalOrder(small.size());
+
+	for (size_t i = 0; i < order.size(); ++i)
+	{
+		size_t idx = order[i];
+		insertImpl<Container>(sortedBig, small[idx]);
+	}
+
+	if (hasStraggler)
+		insertImpl<Container>(sortedBig, straggler);
+	return sortedBig;
+}
+
+template <typename Container, typename PairContainer>
+void PmergeMe::makePairsImpl(const Container &input, PairContainer &pairs, bool &hasStraggler, int &straggler) const
+{
+	pairs.clear();
+	hasStraggler = false;
+	for (size_t i = 0; i < input.size(); i += 2)
+	{
+		if (i + 1 < input.size())
+		{
+			pairs.push_back(std::make_pair(input[i], input[i + 1]));
+		}
+		else
+		{
+			hasStraggler = true;
+			straggler = input[i];
+		}
+	}
+}
+
+template <typename PairContainer>
+void PmergeMe::sortEachPairImpl(PairContainer &pairs) const
+{
+	for (size_t i = 0; i < pairs.size(); ++i)
+	{
+		if (pairs[i].first > pairs[i].second)
+			std::swap(pairs[i].first, pairs[i].second);
+	}
+}
+
+template <typename PairContainer, typename Container>
+void PmergeMe::splitPairsImpl(const PairContainer &pairs, Container &small, Container &big) const
+{
+	small.clear();
+	big.clear();
+	for (size_t i = 0; i < pairs.size(); ++i)
+	{
+		small.push_back(pairs[i].first);
+		big.push_back(pairs[i].second);
+	}
+}
+
+template <typename Container>
+void PmergeMe::insertImpl(Container &sorted, int value) const
+{
+	typename Container::iterator it = std::lower_bound(sorted.begin(), sorted.end(), value);
+	sorted.insert(it, value);
+}
 
 #endif
