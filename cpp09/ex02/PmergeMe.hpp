@@ -39,8 +39,7 @@ public:
     void makePairsVector(const std::vector<int> &input, std::vector< std::pair<int, int> > &pairs, bool &hasStraggler, int &straggler);
     void sortEachPairVector(std::vector< std::pair<int, int> > &pairs);
     void splitPairsVector(const std::vector< std::pair<int, int> > &pairs, std::vector<int> &small, std::vector<int> &big);
-	void binaryInsertVector(std::vector<int> &sorted, int value);
-	size_t binarySearchPositionVector(const std::vector<int> &sorted, int value) const;
+	void InsertVector(std::vector<int> &sorted, int value);
     std::vector<size_t> buildJacobsthalOrder(size_t n) const;
 	
     void sortDeque();
@@ -49,7 +48,7 @@ public:
     void makePairsDeque(const std::deque<int> &input, std::deque< std::pair<int, int> > &pairs, bool &hasStraggler, int &straggler);
     void sortEachPairDeque(std::deque< std::pair<int, int> > &pairs);
     void splitPairsDeque(const std::deque< std::pair<int, int> > &pairs, std::deque<int> &small, std::deque<int> &big);
-	void binaryInsertDeque(std::deque<int> &sorted, int value);
+	void InsertDeque(std::deque<int> &sorted, int value);
 	size_t binarySearchPositionDeque(const std::deque<int> &sorted, int value) const;
 
     double measureVectorSort();
