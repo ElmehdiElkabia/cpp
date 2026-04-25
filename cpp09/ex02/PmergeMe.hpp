@@ -75,10 +75,23 @@ Container PmergeMe::fordJohnsonImpl(const Container &input) const
 	Container sortedBig = fordJohnsonImpl<Container, PairContainer>(big);
 	std::vector<size_t> order = buildJacobsthalOrder(small.size());
 
+
 	for (size_t i = 0; i < order.size(); ++i)
 	{
 		size_t idx = order[i];
-		insertImpl<Container>(sortedBig, small[idx]);
+		if (idx >= small.size() || idx >= big.size())
+			continue;
+		int value = small[idx];
+		int partner = big[idx];
+
+		typename Container::iterator partnerIt = std::find(sortedBig.begin(), sortedBig.end(), partner);
+		typename Container::iterator insertPos;
+
+		if (partnerIt != sortedBig.end())
+			insertPos = std::lower_bound(sortedBig.begin(), partnerIt, value);
+		else
+			insertPos = std::lower_bound(sortedBig.begin(), sortedBig.end(), value);
+		sortedBig.insert(insertPos, value);
 	}
 
 	if (hasStraggler)
